@@ -144,6 +144,28 @@ class TokenizerTest(unittest.TestCase):
             tokens
         )
 
+    def test_empty_string(self):
+        input_str = '""'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [Token(Type.String, '""')],
+            tokens
+        )
+
+    def test_multiple_empty_strings(self):
+        input_str = '"" "" ""'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.String, '""'),
+                Token(Type.String, '""'),
+                Token(Type.String, '""'),
+            ],
+            tokens
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
