@@ -33,32 +33,32 @@ def tokenize(str_input: str):
 
     token_list = []
     token_type = None
-    rem = ''
+    token_content = ''
 
     for i in range(len(str_input)):
         if str_input[i] in IDENTIFIER_CHARS:
-            if not rem:
+            if not token_content:
                 token_type = Type.Other
 
             if token_type == Type.Number:
-                token_list.append(Token(token_type, rem))
+                token_list.append(Token(token_type, token_content))
                 token_type = Type.Other
-                rem = ''
+                token_content = ''
 
-            rem += str_input[i]
+            token_content += str_input[i]
 
         elif str_input[i] in NUM_CHARS:
-            if not rem:
+            if not token_content:
                 token_type = Type.Number
 
-            rem += str_input[i]
+            token_content += str_input[i]
 
         elif str_input[i] == ' ':
-            if rem:
-                token_list.append(Token(token_type, rem))
-                rem = ''
+            if token_content:
+                token_list.append(Token(token_type, token_content))
+                token_content = ''
 
-    if rem:
-        token_list.append(Token(token_type, rem))
+    if token_content:
+        token_list.append(Token(token_type, token_content))
 
     return token_list
