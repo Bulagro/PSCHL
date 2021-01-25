@@ -47,6 +47,12 @@ def tokenize(str_input: str):
 
             rem += str_input[i]
 
+        elif str_input[i] in NUM_CHARS:
+            if not rem:
+                token_type = Type.Number
+
+            rem += str_input[i]
+
         elif str_input[i] == ' ':
             if rem:
                 token_list.append(Token(token_type, rem))
@@ -54,7 +60,5 @@ def tokenize(str_input: str):
 
     if rem:
         token_list.append(Token(token_type, rem))
-        rem = ''
-
 
     return token_list
