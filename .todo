@@ -3,10 +3,12 @@ TOKENIZER:
         ✔ Numbers @done(21-01-25 11:53)
         ✔ Identifiers @done(21-01-25 11:53)
         ☐ Operators
-        ☐ Strings
+        ✔ Strings @done(21-01-25 15:36)
         ☐ Keywords
         ☐ Newlines
         ☐ Indents
+
+    ☐ Allow identifiers starting with number?
 
 FORMATTER:
     ☐ Fix indentation level (if specified)

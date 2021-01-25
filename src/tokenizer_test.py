@@ -87,6 +87,42 @@ class TokenizerTest(unittest.TestCase):
             tokens
         )
 
+    def test_single_string(self):
+        input_str = ' "this is a string" '
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [Token(Type.String, '"this is a string"')],
+            tokens
+        )
+
+    def test_multiple_strings(self):
+        input_str = '"a" "b" "c"'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.String, '"a"'),
+                Token(Type.String, '"b"'),
+                Token(Type.String, '"c"'),
+            ],
+            tokens
+        )
+
+    def test_strings_mixed_with_other_types(self):
+        input_str = 'identifier idnt234 "hello" 76'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Other, 'identifier'),
+                Token(Type.Other, 'idnt234'),
+                Token(Type.String, '"hello"'),
+                Token(Type.Number, '76'),
+            ],
+            tokens
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -52,10 +52,26 @@ def tokenize(str_input: str):
 
             token_content += str_input[i]
 
+        elif str_input[i] == '"':
+            if token_type == Type.String:
+                token_content += '"'
+                token_list.append(Token(Type.String, token_content))
+                token_content = ''
+                token_type = None
+                continue
+
+            if not token_content:
+                token_type = Type.String
+
+            token_content += str_input[i]
+
         elif str_input[i] == ' ':
             if token_content:
-                token_list.append(Token(token_type, token_content))
-                token_content = ''
+                if token_type == Type.String:
+                    token_content += ' '
+                else:
+                    token_list.append(Token(token_type, token_content))
+                    token_content = ''
 
     if token_content:
         token_list.append(Token(token_type, token_content))
