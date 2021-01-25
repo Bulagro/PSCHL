@@ -31,7 +31,14 @@
             "bold" : false,
             "italic" : false
         },
-        "delimiter" : {
+        "string" : {
+            "foreground" : [0, 0, 0],
+            "background" : [0, 0, 0],
+            "enable-background" : false,
+            "bold" : false,
+            "italic" : false
+        },
+        "other" : {
             "foreground" : [0, 0, 0],
             "background" : [0, 0, 0],
             "enable-background" : false,
