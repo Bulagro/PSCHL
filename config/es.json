@@ -1,0 +1,42 @@
+{
+    "keywords" : [
+        "si",
+        "entonces",
+        "finsi",
+        "mientras",
+        "finmientras",
+        "para",
+        "hasta",
+        "finpara"
+    ],
+    "colors" : {
+        "keyword" : {
+            "foreground" : [0, 0, 0],
+            "background" : [0, 0, 0],
+            "enable-background" : false,
+            "bold" : false,
+            "italic" : false
+        },
+        "number" : {
+            "foreground" : [0, 0, 0],
+            "background" : [0, 0, 0],
+            "enable-background" : false,
+            "bold" : false,
+            "italic" : false
+        },
+        "operator" : {
+            "foreground" : [0, 0, 0],
+            "background" : [0, 0, 0],
+            "enable-background" : false,
+            "bold" : false,
+            "italic" : false
+        },
+        "delimiter" : {
+            "foreground" : [0, 0, 0],
+            "background" : [0, 0, 0],
+            "enable-background" : false,
+            "bold" : false,
+            "italic" : false
+        }
+    }
+}
