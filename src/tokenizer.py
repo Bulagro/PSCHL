@@ -1,14 +1,14 @@
 import string, json
-from enum import Enum
+from enum import Enum, auto
 
 
 class Type(Enum):
-    Keyword  = 'keyword'
-    Number   = 'number'
-    Operator = 'operator'
-    NewLine  = 'newline'
-    String   = 'string'
-    Other    = 'other'
+    Keyword  = auto()
+    Number   = auto()
+    Operator = auto()
+    NewLine  = auto()
+    String   = auto()
+    Other    = auto()
 
 
 class Token:
