@@ -1,2 +1,12 @@
 TOKENIZER:
-    ☐ Distinguish between keywords, numbers, operators and delimiters.
+    ☐ Distinguish between:
+        ✔ Numbers @done(21-01-25 11:53)
+        ✔ Identifiers @done(21-01-25 11:53)
+        ☐ Operators
+        ☐ Strings
+        ☐ Keywords
+        ☐ Newlines
+        ☐ Indents
+
+FORMATTER:
+    ☐ Fix indentation level (if specified)

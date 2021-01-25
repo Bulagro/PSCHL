@@ -7,7 +7,6 @@ class Type(Enum):
     Number   = 'number'
     Operator = 'operator'
     NewLine  = 'newline'
-    Indent   = 'indent'
     String   = 'string'
     Other    = 'other'
 
