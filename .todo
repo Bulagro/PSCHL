@@ -8,7 +8,7 @@ TOKENIZER:
         ☐ Newlines
         ☐ Indents
 
-    ☐ Allow identifiers starting with number?
+    ✔ Allow identifiers starting with number? @done(21-01-25 15:43)
 
 FORMATTER:
     ☐ Fix indentation level (if specified)

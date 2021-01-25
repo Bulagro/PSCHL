@@ -87,6 +87,27 @@ class TokenizerTest(unittest.TestCase):
             tokens
         )
 
+    def test_identifier_that_start_with_numbers(self):
+        input_str = '123onetwothree'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [Token(Type.Other, '123onetwothree')],
+            tokens
+        )
+
+    def test_identifiers_that_start_with_numbers(self):
+        input_str = '123onetwothree 2a'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Other, '123onetwothree'),
+                Token(Type.Other, '2a'),
+            ],
+            tokens
+        )
+
     def test_single_string(self):
         input_str = ' "this is a string" '
         tokens = tokenize(input_str)

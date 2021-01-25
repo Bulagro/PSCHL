@@ -40,9 +40,7 @@ def tokenize(str_input: str):
                 token_type = Type.Other
 
             if token_type == Type.Number:
-                token_list.append(Token(token_type, token_content))
                 token_type = Type.Other
-                token_content = ''
 
             token_content += str_input[i]
 
