@@ -12,35 +12,35 @@
     "colors" : {
         "keyword" : {
             "foreground" : [0, 0, 0],
-            "background" : [0, 0, 0],
+            "background" : [0, 0, 0],
             "enable-background" : false,
             "bold" : false,
             "italic" : false
         },
         "number" : {
             "foreground" : [0, 0, 0],
-            "background" : [0, 0, 0],
+            "background" : [0, 0, 0],
             "enable-background" : false,
             "bold" : false,
             "italic" : false
         },
         "operator" : {
             "foreground" : [0, 0, 0],
-            "background" : [0, 0, 0],
+            "background" : [0, 0, 0],
             "enable-background" : false,
             "bold" : false,
             "italic" : false
         },
         "string" : {
             "foreground" : [0, 0, 0],
-            "background" : [0, 0, 0],
+            "background" : [0, 0, 0],
             "enable-background" : false,
             "bold" : false,
             "italic" : false
         },
         "other" : {
             "foreground" : [0, 0, 0],
-            "background" : [0, 0, 0],
+            "background" : [0, 0, 0],
             "enable-background" : false,
             "bold" : false,
             "italic" : false
