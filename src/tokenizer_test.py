@@ -271,6 +271,25 @@ class TokenizerTest(unittest.TestCase):
             tokens
         )
 
+    def test_newlines(self):
+        input_str = 'this \n should \n have \n many \n newlines'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Other, 'this'),
+                Token(Type.NewLine, None),
+                Token(Type.Other, 'should'),
+                Token(Type.NewLine, None),
+                Token(Type.Other, 'have'),
+                Token(Type.NewLine, None),
+                Token(Type.Other, 'many'),
+                Token(Type.NewLine, None),
+                Token(Type.Other, 'newlines'),
+            ],
+            tokens
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

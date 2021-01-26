@@ -23,6 +23,9 @@ class Token:
         return self.type == other.type and self.content == other.content
 
     def __repr__(self):
+        if self.type == Type.NewLine:
+            return f'{self.type.name}'
+
         return f'{self.type}<{self.content}>'
 
 
@@ -84,6 +87,10 @@ def tokenize(str_input: str):
                     token_content = ''
 
             token_content += str_input[i]
+
+        elif str_input[i] == '\n':
+            token_list.append(Token(Type.NewLine))
+            token_content = ''
 
         elif str_input[i] == ' ':
             if token_content:
