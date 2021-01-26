@@ -4,13 +4,14 @@ TOKENIZER:
         ✔ Identifiers @done(21-01-25 11:53)
         ✔ Operators @done(21-01-25 18:25)
         ✔ Strings @done(21-01-25 15:36)
-        ☐ Keywords
+        ✔ Keywords @done(21-01-25 21:45)
         ✔ Newlines @done(21-01-25 18:26)
         ✔ Delimiters @done(21-01-25 21:25)
         ☐ Comments
 
     ✔ Allow identifiers starting with number? @done(21-01-25 15:43)
     ✔ Allow decimal point numbers @done(21-01-25 21:30)
+    ☐ Rename Other to Identifier
 
 FORMATTER:
     ☐ Fix indentation level (if specified)

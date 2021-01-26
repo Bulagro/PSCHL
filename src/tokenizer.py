@@ -36,6 +36,9 @@ def tokenize(str_input: str):
     OPERATORS = ('+', '-', '*', '/', '>', '<', '=', '!')
     DELIMITERS = ('(', ')', '[', ']', '{', '}')
 
+    with open('config/es.json', 'r') as f:
+        KEYWORDS = json.load(f)['keywords']
+
     token_list = []
     token_type = None
     token_content = ''
@@ -107,10 +110,18 @@ def tokenize(str_input: str):
                         token_list.pop(-1)
                         token_content = '-' + token_content
 
+                elif token_type == Type.Other:
+                    if token_content.lower() in KEYWORDS:
+                        token_type = Type.Keyword
+
                 token_list.append(Token(token_type, token_content))
                 token_content = ''
 
     if token_content:
+        if token_type == Type.Other:
+            if token_content.lower() in KEYWORDS:
+                token_type = Type.Keyword
+
         token_list.append(Token(token_type, token_content))
 
     return token_list

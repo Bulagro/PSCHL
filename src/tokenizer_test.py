@@ -353,6 +353,31 @@ class TokenizerTest(unittest.TestCase):
             tokens
         )
 
+    def test_es_keywords(self):
+        input_str = 'si entonces finpara'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Keyword, 'si'),
+                Token(Type.Keyword, 'entonces'),
+                Token(Type.Keyword, 'finpara'),
+            ],
+            tokens
+        )
+
+    def test_es_keywords_capitalized(self):
+        input_str = 'FinPara Mientras'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Keyword, 'FinPara'),
+                Token(Type.Keyword, 'Mientras'),
+            ],
+            tokens
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
