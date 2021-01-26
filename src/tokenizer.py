@@ -58,6 +58,9 @@ def tokenize(str_input: str):
 
             token_content += str_input[i]
 
+        elif str_input[i] == '.':
+            token_content += str_input[i]
+
         elif str_input[i] == '"':
             if token_type == Type.String:
                 token_content += '"'

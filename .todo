@@ -7,9 +7,10 @@ TOKENIZER:
         ☐ Keywords
         ✔ Newlines @done(21-01-25 18:26)
         ✔ Delimiters @done(21-01-25 21:25)
+        ☐ Comments
 
     ✔ Allow identifiers starting with number? @done(21-01-25 15:43)
-    ☐ Allow decimal point numbers
+    ✔ Allow decimal point numbers @done(21-01-25 21:30)
 
 FORMATTER:
     ☐ Fix indentation level (if specified)
