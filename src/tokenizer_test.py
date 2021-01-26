@@ -290,6 +290,25 @@ class TokenizerTest(unittest.TestCase):
             tokens
         )
 
+    def test_delimiters(self):
+        input_str = 'bar(foo(1 + 2))'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Other, 'bar'),
+                Token(Type.Delimiter, '('),
+                Token(Type.Other, 'foo'),
+                Token(Type.Delimiter, '('),
+                Token(Type.Number, '1'),
+                Token(Type.Operator, '+'),
+                Token(Type.Number, '2'),
+                Token(Type.Delimiter, ')'),
+                Token(Type.Delimiter, ')'),
+            ],
+            tokens
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

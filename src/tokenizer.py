@@ -3,12 +3,13 @@ from enum import Enum, auto
 
 
 class Type(Enum):
-    Keyword  = auto()
-    Number   = auto()
-    Operator = auto()
-    NewLine  = auto()
-    String   = auto()
-    Other    = auto()
+    Keyword   = auto()
+    Number    = auto()
+    Operator  = auto()
+    String    = auto()
+    NewLine   = auto()
+    Delimiter = auto()
+    Other     = auto()
 
 
 class Token:
@@ -32,16 +33,8 @@ class Token:
 def tokenize(str_input: str):
     IDENTIFIER_CHARS = string.ascii_letters + '_'
     NUM_CHARS = string.digits + '.'
-    OPERATORS = (
-        '+',
-        '-',
-        '*',
-        '/',
-        '>',
-        '<',
-        '=',
-        '!',
-    )
+    OPERATORS = ('+', '-', '*', '/', '>', '<', '=', '!')
+    DELIMITERS = ('(', ')', '[', ']', '{', '}')
 
     token_list = []
     token_type = None
@@ -90,6 +83,14 @@ def tokenize(str_input: str):
 
         elif str_input[i] == '\n':
             token_list.append(Token(Type.NewLine))
+            token_content = ''
+
+        elif str_input[i] in DELIMITERS:
+            if token_content:
+                token_list.append(Token(token_type, token_content))
+                token_content = ''
+
+            token_list.append(Token(Type.Delimiter, str_input[i]))
             token_content = ''
 
         elif str_input[i] == ' ':

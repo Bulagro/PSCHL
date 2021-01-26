@@ -6,9 +6,10 @@ TOKENIZER:
         ✔ Strings @done(21-01-25 15:36)
         ☐ Keywords
         ✔ Newlines @done(21-01-25 18:26)
-        ☐ Delimiters
+        ✔ Delimiters @done(21-01-25 21:25)
 
     ✔ Allow identifiers starting with number? @done(21-01-25 15:43)
+    ☐ Allow decimal point numbers
 
 FORMATTER:
     ☐ Fix indentation level (if specified)
