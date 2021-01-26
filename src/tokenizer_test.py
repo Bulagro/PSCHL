@@ -7,7 +7,7 @@ class TokenizerTest(unittest.TestCase):
         tokens = tokenize(input_str)
 
         self.assertEqual(
-            [Token(Type.Other, 'hello')],
+            [Token(Type.Identifier, 'hello')],
             tokens
         )
 
@@ -17,11 +17,11 @@ class TokenizerTest(unittest.TestCase):
 
         self.assertEqual(
             [
-                Token(Type.Other, 'This'),
-                Token(Type.Other, 'are'),
-                Token(Type.Other, 'a'),
-                Token(Type.Other, 'few'),
-                Token(Type.Other, 'words'),
+                Token(Type.Identifier, 'This'),
+                Token(Type.Identifier, 'are'),
+                Token(Type.Identifier, 'a'),
+                Token(Type.Identifier, 'few'),
+                Token(Type.Identifier, 'words'),
             ],
             tokens
         )
@@ -54,7 +54,7 @@ class TokenizerTest(unittest.TestCase):
         tokens = tokenize(input_str)
 
         self.assertEqual(
-            [Token(Type.Other, 'babt2002')],
+            [Token(Type.Identifier, 'babt2002')],
             tokens
         )
 
@@ -64,9 +64,9 @@ class TokenizerTest(unittest.TestCase):
 
         self.assertEqual(
             [
-                Token(Type.Other, 'thes2'),
-                Token(Type.Other, 'are24'),
-                Token(Type.Other, 'ident1f13rs'),
+                Token(Type.Identifier, 'thes2'),
+                Token(Type.Identifier, 'are24'),
+                Token(Type.Identifier, 'ident1f13rs'),
             ],
             tokens
         )
@@ -77,12 +77,12 @@ class TokenizerTest(unittest.TestCase):
 
         self.assertEqual(
             [
-                Token(Type.Other, 'this'),
-                Token(Type.Other, 'string'),
-                Token(Type.Other, 'should'),
-                Token(Type.Other, 'have'),
+                Token(Type.Identifier, 'this'),
+                Token(Type.Identifier, 'string'),
+                Token(Type.Identifier, 'should'),
+                Token(Type.Identifier, 'have'),
                 Token(Type.Number, '6'),
-                Token(Type.Other, 'elements'),
+                Token(Type.Identifier, 'elements'),
             ],
             tokens
         )
@@ -92,7 +92,7 @@ class TokenizerTest(unittest.TestCase):
         tokens = tokenize(input_str)
 
         self.assertEqual(
-            [Token(Type.Other, '123onetwothree')],
+            [Token(Type.Identifier, '123onetwothree')],
             tokens
         )
 
@@ -102,8 +102,8 @@ class TokenizerTest(unittest.TestCase):
 
         self.assertEqual(
             [
-                Token(Type.Other, '123onetwothree'),
-                Token(Type.Other, '2a'),
+                Token(Type.Identifier, '123onetwothree'),
+                Token(Type.Identifier, '2a'),
             ],
             tokens
         )
@@ -130,14 +130,14 @@ class TokenizerTest(unittest.TestCase):
             tokens
         )
 
-    def test_strings_mixed_with_other_types(self):
+    def test_strings_mixed_with_Identifier_types(self):
         input_str = 'identifier idnt234 "hello" 76'
         tokens = tokenize(input_str)
 
         self.assertEqual(
             [
-                Token(Type.Other, 'identifier'),
-                Token(Type.Other, 'idnt234'),
+                Token(Type.Identifier, 'identifier'),
+                Token(Type.Identifier, 'idnt234'),
                 Token(Type.String, '"hello"'),
                 Token(Type.Number, '76'),
             ],
@@ -242,9 +242,9 @@ class TokenizerTest(unittest.TestCase):
 
         self.assertEqual(
             [
-                Token(Type.Other, 'hello'),
+                Token(Type.Identifier, 'hello'),
                 Token(Type.Operator, '+'),
-                Token(Type.Other, 'bye'),
+                Token(Type.Identifier, 'bye'),
             ],
             tokens
         )
@@ -277,15 +277,15 @@ class TokenizerTest(unittest.TestCase):
 
         self.assertEqual(
             [
-                Token(Type.Other, 'this'),
+                Token(Type.Identifier, 'this'),
                 Token(Type.NewLine, None),
-                Token(Type.Other, 'should'),
+                Token(Type.Identifier, 'should'),
                 Token(Type.NewLine, None),
-                Token(Type.Other, 'have'),
+                Token(Type.Identifier, 'have'),
                 Token(Type.NewLine, None),
-                Token(Type.Other, 'many'),
+                Token(Type.Identifier, 'many'),
                 Token(Type.NewLine, None),
-                Token(Type.Other, 'newlines'),
+                Token(Type.Identifier, 'newlines'),
             ],
             tokens
         )
@@ -296,9 +296,9 @@ class TokenizerTest(unittest.TestCase):
 
         self.assertEqual(
             [
-                Token(Type.Other, 'bar'),
+                Token(Type.Identifier, 'bar'),
                 Token(Type.Delimiter, '('),
-                Token(Type.Other, 'foo'),
+                Token(Type.Identifier, 'foo'),
                 Token(Type.Delimiter, '('),
                 Token(Type.Number, '1'),
                 Token(Type.Operator, '+'),

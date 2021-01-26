@@ -9,7 +9,7 @@ class Type(Enum):
     String    = auto()
     NewLine   = auto()
     Delimiter = auto()
-    Other     = auto()
+    Identifier     = auto()
 
 
 class Token:
@@ -17,11 +17,11 @@ class Token:
         self.type = t
         self.content = c
 
-    def __eq__(self, other):
-        if not type(self) == type(other):
+    def __eq__(self, Identifier):
+        if not type(self) == type(Identifier):
             return False
 
-        return self.type == other.type and self.content == other.content
+        return self.type == Identifier.type and self.content == Identifier.content
 
     def __repr__(self):
         if self.type == Type.NewLine:
@@ -48,10 +48,10 @@ def tokenize(str_input: str):
     for i in range(input_len):
         if str_input[i] in IDENTIFIER_CHARS:
             if not token_content:
-                token_type = Type.Other
+                token_type = Type.Identifier
 
             if token_type == Type.Number:
-                token_type = Type.Other
+                token_type = Type.Identifier
 
             token_content += str_input[i]
 
@@ -110,7 +110,7 @@ def tokenize(str_input: str):
                         token_list.pop(-1)
                         token_content = '-' + token_content
 
-                elif token_type == Type.Other:
+                elif token_type == Type.Identifier:
                     if token_content.lower() in KEYWORDS:
                         token_type = Type.Keyword
 
@@ -118,7 +118,7 @@ def tokenize(str_input: str):
                 token_content = ''
 
     if token_content:
-        if token_type == Type.Other:
+        if token_type == Type.Identifier:
             if token_content.lower() in KEYWORDS:
                 token_type = Type.Keyword
 

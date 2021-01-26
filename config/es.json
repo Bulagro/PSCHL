@@ -38,7 +38,7 @@
             "bold" : false,
             "italic" : false
         },
-        "other" : {
+        "identifier" : {
             "foreground" : [0, 0, 0],
             "background" : [0, 0, 0],
             "enable-background" : false,
