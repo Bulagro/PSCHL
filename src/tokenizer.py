@@ -3,13 +3,13 @@ from enum import Enum, auto
 
 
 class Type(Enum):
-    Keyword   = auto()
-    Number    = auto()
-    Operator  = auto()
-    String    = auto()
-    NewLine   = auto()
-    Delimiter = auto()
-    Identifier     = auto()
+    Keyword    = 'keyword'
+    Number     = 'number'
+    Operator   = 'operator'
+    String     = 'string'
+    Delimiter  = 'delimiter'
+    Identifier = 'identifier'
+    NewLine    = None
 
 
 class Token:
