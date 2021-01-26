@@ -29,12 +29,24 @@ class Token:
 def tokenize(str_input: str):
     IDENTIFIER_CHARS = string.ascii_letters + '_'
     NUM_CHARS = string.digits + '.'
+    OPERATORS = (
+        '+',
+        '-',
+        '*',
+        '/',
+        '>',
+        '<',
+        '=',
+        '!',
+    )
 
     token_list = []
     token_type = None
     token_content = ''
 
-    for i in range(len(str_input)):
+    input_len = len(str_input)
+
+    for i in range(input_len):
         if str_input[i] in IDENTIFIER_CHARS:
             if not token_content:
                 token_type = Type.Other
@@ -45,7 +57,7 @@ def tokenize(str_input: str):
             token_content += str_input[i]
 
         elif str_input[i] in NUM_CHARS:
-            if not token_content:
+            if not token_content or token_content == '-':
                 token_type = Type.Number
 
             token_content += str_input[i]
@@ -63,13 +75,29 @@ def tokenize(str_input: str):
 
             token_content += str_input[i]
 
+        elif str_input[i] in OPERATORS:
+            if not token_content:
+                token_type = Type.Operator
+            else:
+                if token_type != Type.Operator or len(token_content) == 2:
+                    token_list.append(Token(token_type, token_content))
+                    token_content = ''
+
+            token_content += str_input[i]
+
         elif str_input[i] == ' ':
             if token_content:
                 if token_type == Type.String:
                     token_content += ' '
-                else:
-                    token_list.append(Token(token_type, token_content))
-                    token_content = ''
+                    continue
+
+                elif token_type == Type.Number:
+                    if len(token_list) > 0 and token_list[-1].content == '-':
+                        token_list.pop(-1)
+                        token_content = '-' + token_content
+
+                token_list.append(Token(token_type, token_content))
+                token_content = ''
 
     if token_content:
         token_list.append(Token(token_type, token_content))

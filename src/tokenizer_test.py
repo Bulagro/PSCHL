@@ -166,6 +166,111 @@ class TokenizerTest(unittest.TestCase):
             tokens
         )
 
+    def test_single_char_operator(self):
+        input_str = '='
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [Token(Type.Operator, '=')],
+            tokens
+        )
+
+    def test_multiple_single_char_operators(self):
+        input_str = '= + -'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Operator, '='),
+                Token(Type.Operator, '+'),
+                Token(Type.Operator, '-'),
+            ],
+            tokens
+        )
+
+    def test_single_multichar_operator(self):
+        input_str = '=='
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [Token(Type.Operator, '==')],
+            tokens
+        )
+
+    def test_multiple_multichar_operators(self):
+        input_str = '== -= !='
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Operator, '=='),
+                Token(Type.Operator, '-='),
+                Token(Type.Operator, '!='),
+            ],
+            tokens
+        )
+
+    def test_combined_uni_and_multichar_operators(self):
+        input_str = '= >= ++ !'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Operator, '='),
+                Token(Type.Operator, '>='),
+                Token(Type.Operator, '++'),
+                Token(Type.Operator, '!'),
+            ],
+            tokens
+        )
+
+    def test_multichar_operators_can_only_be_two_characters_long(self):
+        input_str = '==='
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Operator, '=='),
+                Token(Type.Operator, '='),
+            ],
+            tokens
+        )
+
+    def test_combined_identifiers_and_operators(self):
+        input_str = 'hello + bye'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Other, 'hello'),
+                Token(Type.Operator, '+'),
+                Token(Type.Other, 'bye'),
+            ],
+            tokens
+        )
+
+    def test_minus_operator_before_number_becomes_part_of_number_if_theres_no_space_between_them(self):
+        input_str = '-23'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [Token(Type.Number, '-23')],
+            tokens
+        )
+
+    def test_minus_operator_doesnt_become_part_of_number_if_separated(self):
+        input_str = '-48234 - 5'
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [
+                Token(Type.Number, '-48234'),
+                Token(Type.Operator, '-'),
+                Token(Type.Number, '5'),
+            ],
+            tokens
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
