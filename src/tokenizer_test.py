@@ -378,6 +378,16 @@ class TokenizerTest(unittest.TestCase):
             tokens
         )
 
+    def test_multiline_strings(self):
+        input_str = ''' "a
+        "'''
+        tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [Token(Type.String, '"a        "')],
+            tokens
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -87,7 +87,7 @@ def tokenize(str_input: str):
 
             token_content += str_input[i]
 
-        elif str_input[i] == '\n':
+        elif str_input[i] == '\n' and token_type != Type.String:
             token_list.append(Token(Type.NewLine))
             token_content = ''
 
