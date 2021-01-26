@@ -1,4 +1,4 @@
-import string, json
+import string
 from enum import Enum, auto
 
 
@@ -30,14 +30,11 @@ class Token:
         return f'{self.type}<{self.content}>'
 
 
-def tokenize(str_input: str):
+def tokenize(str_input: str, keywords):
     IDENTIFIER_CHARS = string.ascii_letters + '_'
     NUM_CHARS = string.digits + '.'
     OPERATORS = ('+', '-', '*', '/', '>', '<', '=', '!')
     DELIMITERS = ('(', ')', '[', ']', '{', '}')
-
-    with open('config/es.json', 'r') as f:
-        KEYWORDS = json.load(f)['keywords']
 
     token_list = []
     token_type = None
@@ -111,7 +108,7 @@ def tokenize(str_input: str):
                         token_content = '-' + token_content
 
                 elif token_type == Type.Identifier:
-                    if token_content.lower() in KEYWORDS:
+                    if token_content.lower() in keywords:
                         token_type = Type.Keyword
 
                 token_list.append(Token(token_type, token_content))
@@ -119,7 +116,7 @@ def tokenize(str_input: str):
 
     if token_content:
         if token_type == Type.Identifier:
-            if token_content.lower() in KEYWORDS:
+            if token_content.lower() in keywords:
                 token_type = Type.Keyword
 
         token_list.append(Token(token_type, token_content))
