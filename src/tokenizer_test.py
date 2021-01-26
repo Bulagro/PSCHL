@@ -332,13 +332,26 @@ class TokenizerTest(unittest.TestCase):
         )
 
     def test_mixed_point_numbers(self):
-        input_str = '0.1'
+        input_str = '0.1 10'
         tokens = tokenize(input_str)
-        pass
+
+        self.assertEqual(
+            [
+                Token(Type.Number, '0.1'),
+                Token(Type.Number, '10'),
+            ],
+            tokens
+        )
+
 
     def test_negative_floating_point_number(self):
         input_str = '-0.1'
         tokens = tokenize(input_str)
+
+        self.assertEqual(
+            [Token(Type.Number, '-0.1')],
+            tokens
+        )
 
 
 if __name__ == "__main__":
