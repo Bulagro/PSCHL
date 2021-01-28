@@ -281,13 +281,13 @@ class TokenizerTest(unittest.TestCase):
         self.assertEqual(
             [
                 Token(Type.Identifier, 'this'),
-                Token(Type.NewLine, None),
+                Token(Type.NewLine),
                 Token(Type.Identifier, 'should'),
-                Token(Type.NewLine, None),
+                Token(Type.NewLine),
                 Token(Type.Identifier, 'have'),
-                Token(Type.NewLine, None),
+                Token(Type.NewLine),
                 Token(Type.Identifier, 'many'),
-                Token(Type.NewLine, None),
+                Token(Type.NewLine),
                 Token(Type.Identifier, 'newlines'),
             ],
             tokens
