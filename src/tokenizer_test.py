@@ -15,12 +15,12 @@ class TokenizerTest(unittest.TestCase):
         )
 
     def test_sentence(self):
-        input_str = 'This are a few words'
+        input_str = 'These are a few words'
         tokens = tokenize(input_str, keywords)
 
         self.assertEqual(
             [
-                Token(Type.Identifier, 'This'),
+                Token(Type.Identifier, 'These'),
                 Token(Type.Identifier, 'are'),
                 Token(Type.Identifier, 'a'),
                 Token(Type.Identifier, 'few'),
