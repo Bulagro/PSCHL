@@ -1,14 +1,20 @@
 {
-    "keywords" : [
-        "si",
-        "entonces",
-        "finsi",
-        "mientras",
-        "finmientras",
-        "para",
-        "hasta",
-        "finpara"
-    ],
+    "keywords" : {
+        "opening" : [
+            "si",
+            "mientras",
+            "para"
+        ],
+        "closing" : [
+            "finsi",
+            "finmientras",
+            "finpara"
+        ],
+        "regular" : [
+            "entonces",
+            "hasta"
+        ]
+    },
     "colors" : {
         "keyword" : {
             "foreground" : [0, 0, 0],
