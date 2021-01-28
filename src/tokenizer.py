@@ -1,15 +1,19 @@
 import string
-from enum import Enum, auto
+from aenum import Enum, NoAlias
 
 
 class Type(Enum):
-    Keyword    = 'keyword'
+    _settings_ = NoAlias
+
+    OKeyword   = 'keyword' # Opening keyword
+    CKeyword   = 'keyword' # Closing keyword
+    Keyword    = 'keyword' # Neither opening or closing keyword
     Number     = 'number'
     Operator   = 'operator'
     String     = 'string'
     Delimiter  = 'delimiter'
     Identifier = 'identifier'
-    NewLine    = None
+    NewLine    = 0
 
 
 class Token:
@@ -30,11 +34,16 @@ class Token:
         return f'{self.type}<{self.content}>'
 
 
-def tokenize(str_input: str, keywords):
+def tokenize(str_input: str, keywords: dict):
     IDENTIFIER_CHARS = string.ascii_letters + '_'
     NUM_CHARS = string.digits + '.'
     OPERATORS = ('+', '-', '*', '/', '>', '<', '=', '!')
     DELIMITERS = ('(', ')', '[', ']', '{', '}')
+    KEYWORDS_TYPE_LIST = [
+        ('opening', Type.OKeyword),
+        ('closing', Type.CKeyword),
+        ('regular', Type.Keyword),
+    ]
 
     token_list = []
     token_type = None
@@ -108,16 +117,18 @@ def tokenize(str_input: str, keywords):
                         token_content = '-' + token_content
 
                 elif token_type == Type.Identifier:
-                    if token_content.lower() in keywords:
-                        token_type = Type.Keyword
+                    for dict_type, keyword_type in KEYWORDS_TYPE_LIST:
+                        if token_content.lower() in keywords[dict_type]:
+                            token_type = keyword_type
 
                 token_list.append(Token(token_type, token_content))
                 token_content = ''
 
     if token_content:
         if token_type == Type.Identifier:
-            if token_content.lower() in keywords:
-                token_type = Type.Keyword
+            for dict_type, keyword_type in KEYWORDS_TYPE_LIST:
+                if token_content.lower() in keywords[dict_type]:
+                    token_type = keyword_type
 
         token_list.append(Token(token_type, token_content))
 

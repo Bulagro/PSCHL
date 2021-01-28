@@ -9,9 +9,14 @@ TOKENIZER:
         ✔ Delimiters @done(21-01-25 21:25)
         ☐ Comments
 
+    ✔ Distinguish between opening and closing tokens @done(21-01-28 14:30)
     ✔ Allow identifiers starting with number? @done(21-01-25 15:43)
     ✔ Allow decimal point numbers @done(21-01-25 21:30)
     ✔ Rename Other to Identifier @done(21-01-25 21:46)
 
+IMAGE GENERATOR:
+    ☐ Determine image dimensions
+    ☐ Determine char spacing
+
 FORMATTER:
-    ☐ Fix indentation level (if specified)
+    ☐ Fix indentation level

@@ -362,9 +362,9 @@ class TokenizerTest(unittest.TestCase):
 
         self.assertEqual(
             [
-                Token(Type.Keyword, 'si'),
+                Token(Type.OKeyword, 'si'),
                 Token(Type.Keyword, 'entonces'),
-                Token(Type.Keyword, 'finpara'),
+                Token(Type.CKeyword, 'finpara'),
             ],
             tokens
         )
@@ -375,8 +375,8 @@ class TokenizerTest(unittest.TestCase):
 
         self.assertEqual(
             [
-                Token(Type.Keyword, 'FinPara'),
-                Token(Type.Keyword, 'Mientras'),
+                Token(Type.CKeyword, 'FinPara'),
+                Token(Type.OKeyword, 'Mientras'),
             ],
             tokens
         )
