@@ -18,7 +18,7 @@ TOKENIZER:
 IMAGE GENERATOR:
     ☐ Determine image dimensions
     ✘ Determine char spacing @cancelled(21-01-28 17:13)
-        ☐ Make my own text-drawer function, with my own spacing.
+        ✔ Make my own text-drawer function, with my own spacing. @done(21-01-29 14:20)
 
 FORMATTER:
     ✔ Fix indentation level @done(21-01-28 18:44)
