@@ -25,7 +25,7 @@ def generate_image(input_str):
     )
 
     font = ImageFont.truetype('config/font/FiraCode-Regular.ttf', size=config['font-size'])
-    image = Image.new('RGB', (500, 400), (255, 255, 255))
+    image = Image.new('RGBA', (500, 400), (255, 255, 255))
     draw = ImageDraw.Draw(image)
 
     x_spacing = config['x-spacing']
