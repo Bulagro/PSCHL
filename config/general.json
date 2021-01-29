@@ -4,4 +4,5 @@
     "x-spacing" : 8,
     "y-spacing" : 16,
     "tab-size"  : 4,
+    "padding"   : 10
 }

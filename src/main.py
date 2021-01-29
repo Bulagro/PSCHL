@@ -32,9 +32,9 @@ def generate_image(input_str):
     y_spacing = config['y-spacing']
     tab_size = config['tab-size']
 
-    y = 0
+    y = config['padding']
     for line in lines:
-        x = line.indent * x_spacing * tab_size
+        x = (line.indent * x_spacing * tab_size) + config['padding']
 
         for token in line.tokens:
             r, g, b = config['colors'][token.type.value]['foreground']
