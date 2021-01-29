@@ -52,11 +52,3 @@ def generate_image(input_str):
         y += y_spacing
 
     image.save('something.png')
-
-generate_image('''si a entonces
-        b + 1
-        si b entonces
-        a - 1
-        finsi
-        finsi
- ''')
