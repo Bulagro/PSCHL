@@ -15,48 +15,96 @@
             "hasta"
         ]
     },
-    "colors" : {
-        "keyword" : {
-            "foreground" : [252, 144, 3],
-            "background" : [0, 0, 0],
-            "enable-background" : false,
-            "bold" : false,
-            "italic" : false
+    "themes" : {
+        "light" : {
+            "background" : [255, 255, 255],
+            "keyword" : {
+                "foreground" : [252, 144, 3],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "number" : {
+                "foreground" : [3, 94, 252],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "operator" : {
+                "foreground" : [100, 100, 100],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "string" : {
+                "foreground" : [170, 202, 20],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "delimiter" : {
+                "foreground" : [0, 0, 0],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "identifier" : {
+                "foreground" : [0, 0, 0],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            }
         },
-        "number" : {
-            "foreground" : [3, 94, 252],
+        "dark" : {
             "background" : [0, 0, 0],
-            "enable-background" : false,
-            "bold" : false,
-            "italic" : false
-        },
-        "operator" : {
-            "foreground" : [100, 100, 100],
-            "background" : [0, 0, 0],
-            "enable-background" : false,
-            "bold" : false,
-            "italic" : false
-        },
-        "string" : {
-            "foreground" : [170, 202, 20],
-            "background" : [0, 0, 0],
-            "enable-background" : false,
-            "bold" : false,
-            "italic" : false
-        },
-        "delimiter" : {
-            "foreground" : [0, 0, 0],
-            "background" : [0, 0, 0],
-            "enable-background" : false,
-            "bold" : false,
-            "italic" : false
-        },
-        "identifier" : {
-            "foreground" : [0, 0, 0],
-            "background" : [0, 0, 0],
-            "enable-background" : false,
-            "bold" : false,
-            "italic" : false
+            "keyword" : {
+                "foreground" : [252, 144, 3],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "number" : {
+                "foreground" : [3, 94, 252],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "operator" : {
+                "foreground" : [100, 100, 100],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "string" : {
+                "foreground" : [170, 202, 20],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "delimiter" : {
+                "foreground" : [0, 0, 0],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "identifier" : {
+                "foreground" : [0, 0, 0],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            }
         }
     }
 }
