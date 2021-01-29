@@ -14,20 +14,23 @@ def draw_word(x, y, font, color, word, img_draw, char_spacing):
 
 
 def generate_image(input_str):
-    with open('config/es.json', 'r') as f:
+    with open('config/general.json', 'r') as f:
         config = json.load(f)
+
+    with open('config/' + config['lang'] + '.json', 'r') as f:
+        config.update(json.load(f))
 
     lines = get_lines(
         tokenize(input_str, config['keywords'])
     )
 
-    font = ImageFont.truetype('config/font/FiraCode-Regular.ttf', size=14)
+    font = ImageFont.truetype('config/font/FiraCode-Regular.ttf', size=config['font-size'])
     image = Image.new('RGB', (500, 400), (255, 255, 255))
     draw = ImageDraw.Draw(image)
 
-    x_spacing = 2 * font.size / 3
-    y_spacing = font.size + 2
-    tab_size = 4
+    x_spacing = config['x-spacing']
+    y_spacing = config['y-spacing']
+    tab_size = config['tab-size']
 
     y = 0
     for line in lines:

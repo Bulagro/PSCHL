@@ -1,5 +1,7 @@
 {
+    "lang"      : "es",
     "font-size" : 12,
-    "font-family": "firacode",
-    "lang" : "es"
+    "x-spacing" : 8,
+    "y-spacing" : 16,
+    "tab-size"  : 4,
 }
