@@ -2,7 +2,7 @@ import unittest, json
 from tokenizer import *
 
 with open('config/es.json', 'r') as f:
-        keywords = json.load(f)['keywords']
+    keywords = json.load(f)['keywords']
 
 class TokenizerTest(unittest.TestCase):
     def test_single_word(self):
@@ -388,6 +388,19 @@ class TokenizerTest(unittest.TestCase):
 
         self.assertEqual(
             [Token(Type.String, '"a        "')],
+            tokens
+        )
+
+    def test_multiple_spaces_between(self):
+        input_str = 'hola     321    si  '
+        tokens = tokenize(input_str, keywords)
+
+        self.assertEqual(
+            [
+                Token(Type.Identifier, 'hola'),
+                Token(Type.Number, '321'),
+                Token(Type.OKeyword, 'si'),
+            ],
             tokens
         )
 
