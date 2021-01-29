@@ -13,10 +13,13 @@ TOKENIZER:
     ✔ Allow identifiers starting with number? @done(21-01-25 15:43)
     ✔ Allow decimal point numbers @done(21-01-25 21:30)
     ✔ Rename Other to Identifier @done(21-01-25 21:46)
+    ☐ Limit to only valid operators
 
 IMAGE GENERATOR:
     ☐ Determine image dimensions
-    ☐ Determine char spacing
+    ✘ Determine char spacing @cancelled(21-01-28 17:13)
+        ☐ Make my own text-drawer function, with my own spacing.
 
 FORMATTER:
-    ☐ Fix indentation level
+    ✔ Fix indentation level @done(21-01-28 18:44)
+    ☐ Maybe rename to 'indenter'?
