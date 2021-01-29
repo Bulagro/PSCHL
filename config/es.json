@@ -17,28 +17,28 @@
     },
     "colors" : {
         "keyword" : {
-            "foreground" : [0, 0, 0],
+            "foreground" : [252, 144, 3],
             "background" : [0, 0, 0],
             "enable-background" : false,
             "bold" : false,
             "italic" : false
         },
         "number" : {
-            "foreground" : [0, 0, 0],
+            "foreground" : [3, 94, 252],
             "background" : [0, 0, 0],
             "enable-background" : false,
             "bold" : false,
             "italic" : false
         },
         "operator" : {
-            "foreground" : [0, 0, 0],
+            "foreground" : [100, 100, 100],
             "background" : [0, 0, 0],
             "enable-background" : false,
             "bold" : false,
             "italic" : false
         },
         "string" : {
-            "foreground" : [0, 0, 0],
+            "foreground" : [170, 202, 20],
             "background" : [0, 0, 0],
             "enable-background" : false,
             "bold" : false,
