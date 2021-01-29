@@ -94,6 +94,14 @@ def tokenize(str_input: str, keywords: dict):
             token_content += str_input[i]
 
         elif str_input[i] == '\n' and token_type != Type.String:
+            if token_content:
+                if token_type == Type.Identifier:
+                    for dict_type, keyword_type in KEYWORDS_TYPE_LIST:
+                        if token_content.lower() in keywords[dict_type]:
+                            token_type = keyword_type
+
+                token_list.append(Token(token_type, token_content))
+
             token_list.append(Token(Type.NewLine))
             token_content = ''
 

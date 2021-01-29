@@ -404,6 +404,21 @@ class TokenizerTest(unittest.TestCase):
             tokens
         )
 
+    def test_why_do_pythons_multiline_string_messes_up_my_tokenizer(self):
+        input_str = '''
+        something
+        '''
+        tokens = tokenize(input_str, keywords)
+
+        self.assertEqual(
+            [
+                Token(Type.NewLine),
+                Token(Type.Identifier, 'something'),
+                Token(Type.NewLine),
+            ],
+            tokens
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
