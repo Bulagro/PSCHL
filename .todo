@@ -5,9 +5,14 @@ TOKENIZER:
         ✔ Operators @done(21-01-25 18:25)
         ✔ Strings @done(21-01-25 15:36)
         ✔ Keywords @done(21-01-25 21:45)
+            ☐ End<AlgorithmName> keyword
         ✔ Newlines @done(21-01-25 18:26)
         ✔ Delimiters @done(21-01-25 21:25)
         ☐ Comments
+        ☐ Algorithm data:
+            ☐ Name
+            ☐ Input
+            ☐ Output
 
     ✔ Distinguish between opening and closing tokens @done(21-01-28 14:30)
     ✔ Allow identifiers starting with number? @done(21-01-25 15:43)
@@ -23,3 +28,9 @@ IMAGE GENERATOR:
 FORMATTER:
     ✔ Fix indentation level @done(21-01-28 18:44)
     ☐ Maybe rename to 'indenter'?
+    ☐ Return minimum required space (in chars)
+
+RE-WRITE:
+    ☐ Rewrite Tokenizer and Formatter in Rust.
+        They will then be WASM'd and then I'll display this thing dynamically (with some js magic)
+        It is also important to note that I know basically 0 js :)
