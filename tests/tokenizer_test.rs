@@ -291,3 +291,54 @@ fn test_multiple_decimal_notated_numebrs() {
 
     assert_eq!(expected, actual);
 }
+
+#[test]
+fn test_operators() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Operator,
+            c: String::from("+"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("-"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("!"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("+-!", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_operators_separate_other_tokens() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::RKeyword,
+            c: String::from("entonces"),
+        },
+        Token {
+            t: Type::Delimiter,
+            c: String::from("."),
+        },
+        Token {
+            t: Type::OKeyword,
+            c: String::from("si"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("+"),
+        },
+        Token {
+            t: Type::Number,
+            c: String::from("24"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("entonces.si+24", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+

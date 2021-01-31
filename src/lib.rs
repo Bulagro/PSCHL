@@ -3,6 +3,7 @@ use serde::Deserialize;
 const IDENTIFIER_CHARS: &str = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ_";
 const DIGITS: &str = "0123456789";
 const DELIMITERS: &str = "(){}[].,:;";
+const OPERATORS: &str = "+-*/=!<>";
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Type {
@@ -92,6 +93,25 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
 
             tokens.push(Token {
                 t: Type::Delimiter,
+                c: String::from(c),
+            });
+
+            token_type = Type::None;
+            token_content.clear();
+        } else if OPERATORS.contains(c) {
+            if !token_content.is_empty() {
+                if token_type == Type::Identifier {
+                    token_type = get_keyword_type_if_applicable(&token_content, &keywords);
+                }
+
+                tokens.push(Token {
+                    t: token_type,
+                    c: token_content.clone(),
+                });
+            }
+
+            tokens.push(Token {
+                t: Type::Operator,
                 c: String::from(c),
             });
 
