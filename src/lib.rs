@@ -163,10 +163,20 @@ fn combine_tokens(tokens: Vec<Token>) -> Vec<Token> {
         done = true;
 
         for i in 0..tokens.len() - 1 {
+            let is_negative = &tokens[i].c == "-" && tokens[i + 1].t == Type::Number;
             let is_float = i < tokens.len() - 2
                 && tokens[i].t == Type::Number
                 && &tokens[i + 1].c == "."
                 && tokens[i + 2].t == Type::Number;
+
+            if is_negative {
+                if (i > 0 && tokens[i - 1].t != Type::Number) || (i == 0) {
+                    tokens[i + 1].c = format!("-{}", &tokens[i + 1].c);
+                    tokens.remove(i);
+                    done = false;
+                    break;
+                }
+            }
 
             if is_float {
                 tokens[i].c = format!("{}.{}", &tokens[i].c, &tokens[i + 2].c);

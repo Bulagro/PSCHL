@@ -342,3 +342,34 @@ fn test_operators_separate_other_tokens() {
     assert_eq!(expected, actual);
 }
 
+#[test]
+fn test_negative_number_in_single_token() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Number,
+        c: String::from("-1"),
+    }];
+    let actual: Vec<Token> = tokenize("-1", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_negative_numbers_in_single_token() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Number,
+            c: String::from("-24"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("+"),
+        },
+        Token {
+            t: Type::Number,
+            c: String::from("-54"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("-24 + -54", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
