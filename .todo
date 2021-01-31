@@ -44,8 +44,9 @@ RE-WRITE:
                 ☐ Decimal notation
                 ☐ Negative
             ☐ Identifiers
-                ☐ Keywords
-                    ☐ Distinguish between opening, closing and 'regular' keywords
+                ☐ Numbers in between
+                ✔ Keywords @done(21-01-30 21:57)
+                    ✔ Distinguish between opening, closing and 'regular' keywords @done(21-01-30 21:57)
             ☐ Operators
                 ☐ Limit to only valid operators
             ☐ Strings
