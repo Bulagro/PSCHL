@@ -151,3 +151,20 @@ fn test_identifier_with_numbers_in_between() {
     assert_eq!(expected, actual);
 }
 
+#[test]
+fn test_number_does_not_integrate_into_identifier_if_at_beginning() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Number,
+            c: String::from("54"),
+        },
+        Token {
+            t: Type::Identifier,
+            c: String::from("dios"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("54dios", get_es_keywords());
+
+    assert_eq!(expected, actual);
+
+}

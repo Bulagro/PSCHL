@@ -58,6 +58,13 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
         if IDENTIFIER_CHARS.contains(c) {
             if token_content.is_empty() {
                 token_type = Type::Identifier;
+            } else if token_type == Type::Number {
+                tokens.push(Token {
+                    t: token_type,
+                    c: token_content.clone(),
+                });
+                token_type = Type::Identifier;
+                token_content.clear();
             }
 
             token_content += &c.to_string();
