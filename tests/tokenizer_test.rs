@@ -239,3 +239,24 @@ fn test_delimiters() {
     assert_eq!(expected, actual);
 }
 
+#[test]
+fn test_delimiters_limit_keywords() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Identifier,
+            c: String::from("hola"),
+        },
+        Token {
+            t: Type::Delimiter,
+            c: String::from("."),
+        },
+        Token {
+            t: Type::Number,
+            c: String::from("32"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("hola.32", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+

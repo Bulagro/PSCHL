@@ -96,12 +96,24 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
 
             token_content += &c.to_string();
         } else if DELIMITERS.contains(c) {
+            if !token_content.is_empty() {
+                if token_type == Type::Identifier {
+                    token_type = get_keyword_type_if_applicable(&token_content, &keywords);
+                }
+
+                tokens.push(Token {
+                    t: token_type,
+                    c: token_content.clone(),
+                });
+            }
+
             tokens.push(Token {
                 t: Type::Delimiter,
                 c: String::from(c),
             });
 
             token_type = Type::None;
+            token_content.clear();
         }
     }
 
