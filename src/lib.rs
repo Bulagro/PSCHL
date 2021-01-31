@@ -31,23 +31,6 @@ struct Keywords {
     regular: Vec<String>,
 }
 
-fn get_keyword_type_if_applicable<'a>(token_content: &'a str, keywords: &'a Keywords) -> Type {
-    let token_content = token_content.to_string();
-    let l = [
-        (Type::OKeyword, &keywords.opening),
-        (Type::CKeyword, &keywords.closing),
-        (Type::RKeyword, &keywords.regular),
-    ];
-
-    for (t, k) in l.iter() {
-        if k.contains(&token_content) {
-            return *t;
-        }
-    }
-
-    Type::Identifier
-}
-
 pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<Token> {
     let keywords: Keywords = serde_json::from_str(lang_config_str).unwrap();
 
@@ -126,6 +109,51 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
             t: token_type,
             c: token_content.clone(),
         });
+    }
+
+    combine_tokens(tokens)
+}
+
+fn get_keyword_type_if_applicable<'a>(token_content: &'a str, keywords: &'a Keywords) -> Type {
+    let token_content = token_content.to_string();
+    let l = [
+        (Type::OKeyword, &keywords.opening),
+        (Type::CKeyword, &keywords.closing),
+        (Type::RKeyword, &keywords.regular),
+    ];
+
+    for (t, k) in l.iter() {
+        if k.contains(&token_content) {
+            return *t;
+        }
+    }
+
+    Type::Identifier
+}
+
+fn combine_tokens(tokens: Vec<Token>) -> Vec<Token> {
+    if tokens.len() == 0 {
+        return tokens;
+    }
+
+    let mut tokens = tokens;
+    let mut done = false;
+
+    while !done {
+        done = true;
+
+        for i in 0..tokens.len() - 1 {
+            if i < tokens.len() - 2 &&
+            tokens[i].t == Type::Number &&
+            &tokens[i + 1].c == "." &&
+            tokens[i + 2].t == Type::Number {
+                tokens[i].c = format!("{}.{}", &tokens[i].c, &tokens[i + 2].c);
+                tokens.remove(i + 1);
+                tokens.remove(i + 1);
+                done = false;
+                break;
+            }
+        }
     }
 
     tokens

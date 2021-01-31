@@ -260,3 +260,34 @@ fn test_delimiters_limit_keywords() {
     assert_eq!(expected, actual);
 }
 
+#[test]
+fn test_decimal_notated_numbers_in_single_token() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Number,
+        c: String::from("0.1"),
+    }];
+    let actual: Vec<Token> = tokenize("0.1", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_multiple_decimal_notated_numebrs() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Number,
+            c: String::from("0.1"),
+        },
+        Token {
+            t: Type::Number,
+            c: String::from("10.212453"),
+        },
+        Token {
+            t: Type::Number,
+            c: String::from("36450.2"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("0.1 10.212453 36450.2", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
