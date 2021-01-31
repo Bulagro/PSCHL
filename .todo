@@ -47,7 +47,7 @@ RE-WRITE:
                 ✔ Numbers in between @done(21-01-30 22:09)
                 ✔ Keywords @done(21-01-30 21:57)
                     ✔ Distinguish between opening, closing and 'regular' keywords @done(21-01-30 21:57)
-            ☐ Operators
+            ✔ Operators @done(21-01-31 00:02)
                 ☐ Limit to only valid operators
             ☐ Strings
             ☐ Delimiters
