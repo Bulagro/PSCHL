@@ -1,6 +1,7 @@
 use serde::Deserialize;
 
 const IDENTIFIER_CHARS: &str = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ_";
+const DIGITS: &str = "0123456789";
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Type {
@@ -73,6 +74,12 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
                 token_type = Type::None;
                 token_content.clear();
             }
+        } else if DIGITS.contains(c) {
+            if token_content.is_empty() {
+                token_type = Type::Number;
+            }
+
+            token_content += &c.to_string();
         }
     }
 

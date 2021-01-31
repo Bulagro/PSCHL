@@ -111,3 +111,43 @@ fn test_combined_identifiers_and_keywords() {
 
     assert_eq!(expected, actual);
 }
+
+#[test]
+fn test_single_positive_number() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Number,
+        c: String::from("12"),
+    }];
+    let actual: Vec<Token> = tokenize("12", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_multiple_positive_numbers() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Number,
+            c: String::from("12"),
+        },
+        Token {
+            t: Type::Number,
+            c: String::from("23436"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("12 23436", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_identifier_with_numbers_in_between() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Identifier,
+        c: String::from("hola23"),
+    }];
+    let actual: Vec<Token> = tokenize("hola23", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+

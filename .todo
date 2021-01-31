@@ -40,11 +40,11 @@ RE-WRITE:
             To deal with that, I'll have to add the json file and serve it with github pages. @high
 
         Tokenizer:
-            ☐ Numbers
+            ✔ Numbers @done(21-01-30 22:09)
                 ☐ Decimal notation
                 ☐ Negative
-            ☐ Identifiers
-                ☐ Numbers in between
+            ✔ Identifiers @done(21-01-30 22:09)
+                ✔ Numbers in between @done(21-01-30 22:09)
                 ✔ Keywords @done(21-01-30 21:57)
                     ✔ Distinguish between opening, closing and 'regular' keywords @done(21-01-30 21:57)
             ☐ Operators
