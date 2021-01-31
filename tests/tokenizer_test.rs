@@ -480,3 +480,35 @@ fn test_only_valid_operators_mix_together() {
 
     assert_eq!(expected, actual);
 }
+
+#[test]
+fn floating_point_negative_number_in_single_token() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Number,
+        c: String::from("-0.1"),
+    }];
+    let actual: Vec<Token> = tokenize("-0.1", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn floating_point_negateive_numbers_in_single_token() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Number,
+            c: String::from("-234.34"),
+        },
+        Token {
+            t: Type::Identifier,
+            c: String::from("a"),
+        },
+        Token {
+            t: Type::Number,
+            c: String::from("-45"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("-234.34 a -45", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}

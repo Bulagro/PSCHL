@@ -43,7 +43,7 @@ RE-WRITE:
             ✔ Numbers @done(21-01-30 22:09)
                 ✔ Decimal notation @done(21-01-31 00:43)
                 ✔ Negative @done(21-01-31 14:00)
-                ☐ Negative and decimal notation
+                ✔ Negative and decimal notation @done(21-01-31 14:04)
             ✔ Identifiers @done(21-01-30 22:09)
                 ✔ Numbers in between @done(21-01-30 22:09)
                 ✔ Keywords @done(21-01-30 21:57)
