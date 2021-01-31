@@ -55,20 +55,7 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
     let mut token_content: String = String::new();
 
     for c in input_str.chars() {
-        if IDENTIFIER_CHARS.contains(c) {
-            if token_content.is_empty() {
-                token_type = Type::Identifier;
-            } else if token_type == Type::Number {
-                tokens.push(Token {
-                    t: token_type,
-                    c: token_content.clone(),
-                });
-                token_type = Type::Identifier;
-                token_content.clear();
-            }
-
-            token_content += &c.to_string();
-        } else if c == ' ' {
+        if c == ' ' || c == '\n' {
             if !token_content.is_empty() {
                 if token_type == Type::Identifier {
                     token_type = get_keyword_type_if_applicable(&token_content, &keywords);
@@ -81,6 +68,26 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
                 token_type = Type::None;
                 token_content.clear();
             }
+
+            if c == '\n' {
+                tokens.push(Token {
+                    t: Type::NewLine,
+                    c: String::new(),
+                });
+            }
+        } else if IDENTIFIER_CHARS.contains(c) {
+            if token_content.is_empty() {
+                token_type = Type::Identifier;
+            } else if token_type == Type::Number {
+                tokens.push(Token {
+                    t: token_type,
+                    c: token_content.clone(),
+                });
+                token_type = Type::Identifier;
+                token_content.clear();
+            }
+
+            token_content += &c.to_string();
         } else if DIGITS.contains(c) {
             if token_content.is_empty() {
                 token_type = Type::Number;

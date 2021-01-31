@@ -166,5 +166,50 @@ fn test_number_does_not_integrate_into_identifier_if_at_beginning() {
     let actual: Vec<Token> = tokenize("54dios", get_es_keywords());
 
     assert_eq!(expected, actual);
+}
 
+#[test]
+fn test_single_newline() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::NewLine,
+        c: String::new(),
+    }];
+    let actual: Vec<Token> = tokenize("\n", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_multiple_newlines_with_other_tokens() {
+    let input_str = "este 1\n3 rtr4\n";
+
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Identifier,
+            c: String::from("este"),
+        },
+        Token {
+            t: Type::Number,
+            c: String::from("1"),
+        },
+        Token {
+            t: Type::NewLine,
+            c: String::new(),
+        },
+        Token {
+            t: Type::Number,
+            c: String::from("3"),
+        },
+        Token {
+            t: Type::Identifier,
+            c: String::from("rtr4"),
+        },
+        Token {
+            t: Type::NewLine,
+            c: String::new(),
+        },
+    ];
+    let actual: Vec<Token> = tokenize(input_str, get_es_keywords());
+
+    assert_eq!(expected, actual);
 }

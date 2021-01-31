@@ -51,6 +51,7 @@ RE-WRITE:
                 ☐ Limit to only valid operators
             ☐ Strings
             ☐ Delimiters
+                ✔ New lines @done(21-01-30 22:35)
             ☐ Comments
             ☐ Algorithm data
                 ☐ Name
