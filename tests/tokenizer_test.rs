@@ -213,3 +213,29 @@ fn test_multiple_newlines_with_other_tokens() {
 
     assert_eq!(expected, actual);
 }
+
+#[test]
+fn test_delimiters() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Delimiter,
+            c: String::from(","),
+        },
+        Token {
+            t: Type::Delimiter,
+            c: String::from("."),
+        },
+        Token {
+            t: Type::Delimiter,
+            c: String::from("("),
+        },
+        Token {
+            t: Type::Delimiter,
+            c: String::from(")"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize(",.()", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+

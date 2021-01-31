@@ -2,6 +2,7 @@ use serde::Deserialize;
 
 const IDENTIFIER_CHARS: &str = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ_";
 const DIGITS: &str = "0123456789";
+const DELIMITERS: &str = "(){}[].,:;";
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Type {
@@ -94,6 +95,13 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
             }
 
             token_content += &c.to_string();
+        } else if DELIMITERS.contains(c) {
+            tokens.push(Token {
+                t: Type::Delimiter,
+                c: String::from(c),
+            });
+
+            token_type = Type::None;
         }
     }
 
