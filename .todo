@@ -34,3 +34,24 @@ RE-WRITE:
     ☐ Rewrite Tokenizer and Formatter in Rust.
         They will then be WASM'd and then I'll display this thing dynamically (with some js magic)
         It is also important to note that I know basically 0 js :)
+        ✔ Deserialize json. @done(21-01-30 20:57)
+            How do I want to deal with this?
+            My idea is to have the main js script pass on a string and then have rust deserialize it.
+            To deal with that, I'll have to add the json file and serve it with github pages. @high
+
+        Tokenizer:
+            ☐ Numbers
+                ☐ Decimal notation
+                ☐ Negative
+            ☐ Identifiers
+            ☐ Operators
+                ☐ Limit to only valid operators
+            ☐ Strings
+            ☐ Keywords
+                ☐ Distinguish between opening, closing and 'regular' keywords
+            ☐ Delimiters
+            ☐ Comments
+            ☐ Algorithm data
+                ☐ Name
+                ☐ Input
+                ☐ Output
