@@ -512,3 +512,84 @@ fn floating_point_negateive_numbers_in_single_token() {
 
     assert_eq!(expected, actual);
 }
+
+#[test]
+fn test_basic_string() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::String,
+        c: String::from("\"hola\""),
+    }];
+
+    let actual: Vec<Token> = tokenize("\"hola\"", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_string_and_identifiers() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Identifier,
+            c: String::from("dsf"),
+        },
+        Token {
+            t: Type::String,
+            c: String::from("\"this is a string\""),
+        },
+        Token {
+            t: Type::Identifier,
+            c: String::from("saf"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("dsf \"this is a string\" saf", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_strings_include_numbers_and_identifiers() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::String,
+        c: String::from("\"123.234+34\""),
+    }];
+    let actual: Vec<Token> = tokenize("\"123.234+34\"", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_multiline_string() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::String,
+        c: String::from(
+            "\"
+        something
+        \"",
+        ),
+    }];
+    let actual: Vec<Token> = tokenize("\"\n        something\n        \"", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_string_with_other_chars() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::String,
+        c: String::from("\"%·$/&\""),
+    }];
+    let actual: Vec<Token> = tokenize("\"%·$/&\"", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_string_with_escaped_quotes() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::String,
+        c: String::from("\" \\\" \""),
+    }];
+    let actual: Vec<Token> = tokenize("\" \\\" \"", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}

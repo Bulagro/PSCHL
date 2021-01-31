@@ -49,8 +49,8 @@ RE-WRITE:
                 ✔ Keywords @done(21-01-30 21:57)
                     ✔ Distinguish between opening, closing and 'regular' keywords @done(21-01-30 21:57)
             ✔ Operators @done(21-01-31 00:02)
-                ☐ Limit to only valid operators
-            ☐ Strings
+                ✔ Limit to only valid operators @done(21-01-31 14:04)
+            ✔ Strings @done(21-01-31 16:33)
             ✔ Delimiters @done(21-01-31 14:00)
                 ✔ New lines @done(21-01-30 22:35)
             ☐ Comments
