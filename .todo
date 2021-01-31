@@ -41,8 +41,9 @@ RE-WRITE:
 
         Tokenizer:
             ✔ Numbers @done(21-01-30 22:09)
-                ☐ Decimal notation
-                ☐ Negative
+                ✔ Decimal notation @done(21-01-31 00:43)
+                ✔ Negative @done(21-01-31 14:00)
+                ☐ Negative and decimal notation
             ✔ Identifiers @done(21-01-30 22:09)
                 ✔ Numbers in between @done(21-01-30 22:09)
                 ✔ Keywords @done(21-01-30 21:57)
@@ -50,7 +51,7 @@ RE-WRITE:
             ✔ Operators @done(21-01-31 00:02)
                 ☐ Limit to only valid operators
             ☐ Strings
-            ☐ Delimiters
+            ✔ Delimiters @done(21-01-31 14:00)
                 ✔ New lines @done(21-01-30 22:35)
             ☐ Comments
             ☐ Algorithm data

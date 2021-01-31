@@ -4,6 +4,8 @@ const IDENTIFIER_CHARS: &str = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQR
 const DIGITS: &str = "0123456789";
 const DELIMITERS: &str = "(){}[].,:;";
 const OPERATORS: &str = "+-*/=!<>";
+const DOUBLE_CHAR_OPERATORS: [&str; 10] =
+    ["==", "!=", "<=", ">=", "++", "--", "+=", "-=", "*=", "/="];
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Type {
@@ -161,9 +163,14 @@ fn combine_tokens(tokens: Vec<Token>) -> Vec<Token> {
 
     while !done {
         done = true;
-
         for i in 0..tokens.len() - 1 {
             let is_negative = &tokens[i].c == "-" && tokens[i + 1].t == Type::Number;
+
+            let op: &str = &format!("{}{}", &tokens[i].c, &tokens[i + 1].c);
+            let is_double_operator = OPERATORS.contains(&tokens[i].c)
+                && OPERATORS.contains(&tokens[i + 1].c)
+                && DOUBLE_CHAR_OPERATORS.contains(&op);
+
             let is_float = i < tokens.len() - 2
                 && tokens[i].t == Type::Number
                 && &tokens[i + 1].c == "."
@@ -176,11 +183,14 @@ fn combine_tokens(tokens: Vec<Token>) -> Vec<Token> {
                     done = false;
                     break;
                 }
-            }
-
-            if is_float {
+            } else if is_float {
                 tokens[i].c = format!("{}.{}", &tokens[i].c, &tokens[i + 2].c);
                 tokens.remove(i + 1);
+                tokens.remove(i + 1);
+                done = false;
+                break;
+            } else if is_double_operator {
+                tokens[i].c = format!("{}{}", &tokens[i].c, &tokens[i + 1].c);
                 tokens.remove(i + 1);
                 done = false;
                 break;

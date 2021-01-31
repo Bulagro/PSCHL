@@ -373,3 +373,110 @@ fn test_negative_numbers_in_single_token() {
 
     assert_eq!(expected, actual);
 }
+
+#[test]
+fn test_double_char_operator_in_single_token() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Operator,
+        c: String::from("--"),
+    }];
+    let actual: Vec<Token> = tokenize("--", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_multiple_double_char_operators_separated_with_spaces() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Operator,
+            c: String::from("++"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("--"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("!="),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("++ -- !=", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_multiple_double_char_operators_no_spaces_in_between() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Operator,
+            c: String::from("--"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("++"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("!="),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("--++!=", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_double_char_operators_separate_from_single_char() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Operator,
+            c: String::from("--"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("+"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("--+", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_only_valid_operators_mix_together() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Operator,
+            c: String::from("-"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("+"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("-"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("++"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("="),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("!"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("<="),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("-+-++=!<=", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
