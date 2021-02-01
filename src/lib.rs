@@ -212,7 +212,7 @@ pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
 }
 
 fn get_keyword_type_if_applicable(token_content: &str, keywords: &Keywords) -> Type {
-    let token_content = token_content.to_string();
+    let token_content = token_content.to_string().to_lowercase();
     let l = [
         (Type::OpeningKw, &keywords.opening),
         (Type::ClosingKw, &keywords.closing),

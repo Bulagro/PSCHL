@@ -7,7 +7,7 @@ RE-WRITE:
             My idea is to have the main js script pass on a string and then have rust deserialize it.
             To deal with that, I'll have to add the json file and serve it with github pages. @high
         ✔ Serialize json to pass on the <endAlgorithm> token. @done(21-01-31 21:03)
-        ☐ Allow the tokenizer to find lowercase, uppercase and mixed-case keywords.
+        ✔ Allow the tokenizer to find lowercase, uppercase and mixed-case keywords. @done(21-02-01 02:06)
 
         Tokenizer:
             ✔ Numbers @done(21-01-30 22:09)

@@ -739,3 +739,24 @@ fn test_output_token() {
 
     assert_eq!(expected, actual);
 }
+
+#[test]
+fn test_mixed_case_keywords() {
+    let expected = vec![
+        Token {
+            t: Type::OpeningKw,
+            c: String::from("Si"),
+        },
+        Token {
+            t: Type::RegularKw,
+            c: String::from("EntOnces"),
+        },
+        Token {
+            t: Type::ClosingKw,
+            c: String::from("FinPara"),
+        },
+    ];
+    let actual = tokenize("Si EntOnces FinPara", get_es_keywords());
+
+    assert_eq!(actual, expected);
+}
