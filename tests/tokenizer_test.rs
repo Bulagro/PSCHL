@@ -694,3 +694,36 @@ fn test_comment_ends_with_new_line() {
 
     assert_eq!(expected, actual);
 }
+
+#[test]
+fn test_name_token() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Name,
+        c: String::from("nombre: Algoritmo"),
+    }];
+    let actual: Vec<Token> = tokenize("nombre: Algoritmo", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_input_token() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Input,
+        c: String::from("entrada: a"),
+    }];
+    let actual: Vec<Token> = tokenize("entrada: a", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_output_token() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Output,
+        c: String::from("salida: a, b, c"),
+    }];
+    let actual: Vec<Token> = tokenize("salida: a, b, c", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}

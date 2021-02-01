@@ -53,8 +53,12 @@ RE-WRITE:
             ✔ Strings @done(21-01-31 16:33)
             ✔ Delimiters @done(21-01-31 14:00)
                 ✔ New lines @done(21-01-30 22:35)
-            ☐ Comments
-            ☐ Algorithm data
-                ☐ Name
-                ☐ Input
-                ☐ Output
+            ✔ Comments @done(21-01-31 19:38)
+            ☐ Algorithm data:
+                ✔ Name @done(21-01-31 19:35)
+                ✔ Input @done(21-01-31 19:35)
+                ✔ Output @done(21-01-31 19:35)
+                ☐ Parse data:
+                    ☐ Parse name
+                        ☐ Add <endAlgorithm> token to closing token list
+                    ☐ Parse input and output
