@@ -14,9 +14,9 @@ const LINE_TOKENS: [Type; 5] = [
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Type {
-	OKeyword, // Opening
-	CKeyword, // Closing
-	RKeyword, // Regular
+	OpeningKw,
+	ClosingKw,
+	RegularKw,
 	Number,
 	Operator,
 	String,
@@ -208,9 +208,9 @@ pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
 fn get_keyword_type_if_applicable(token_content: &str, keywords: &Keywords) -> Type {
 	let token_content = token_content.to_string();
 	let l = [
-		(Type::OKeyword, &keywords.opening),
-		(Type::CKeyword, &keywords.closing),
-		(Type::RKeyword, &keywords.regular),
+		(Type::OpeningKw, &keywords.opening),
+		(Type::ClosingKw, &keywords.closing),
+		(Type::RegularKw, &keywords.regular),
 	];
 
 	for (t, k) in l.iter() {

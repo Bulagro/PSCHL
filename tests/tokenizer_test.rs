@@ -67,7 +67,7 @@ fn test_multiple_identifiers() {
 #[test]
 fn test_single_keyword() {
 	let expected: Vec<Token> = vec![Token {
-		t: Type::OKeyword,
+		t: Type::OpeningKw,
 		c: String::from("si"),
 	}];
 	let actual: Vec<Token> = tokenize("si", get_es_keywords());
@@ -79,15 +79,15 @@ fn test_single_keyword() {
 fn test_multiple_keywords() {
 	let expected: Vec<Token> = vec![
 		Token {
-			t: Type::OKeyword,
+			t: Type::OpeningKw,
 			c: String::from("si"),
 		},
 		Token {
-			t: Type::CKeyword,
+			t: Type::ClosingKw,
 			c: String::from("finpara"),
 		},
 		Token {
-			t: Type::RKeyword,
+			t: Type::RegularKw,
 			c: String::from("entonces"),
 		},
 	];
@@ -104,7 +104,7 @@ fn test_combined_identifiers_and_keywords() {
 			c: String::from("cosas"),
 		},
 		Token {
-			t: Type::RKeyword,
+			t: Type::RegularKw,
 			c: String::from("hasta"),
 		},
 		Token {
@@ -322,7 +322,7 @@ fn test_operators() {
 fn test_operators_separate_other_tokens() {
 	let expected: Vec<Token> = vec![
 		Token {
-			t: Type::RKeyword,
+			t: Type::RegularKw,
 			c: String::from("entonces"),
 		},
 		Token {
@@ -330,7 +330,7 @@ fn test_operators_separate_other_tokens() {
 			c: String::from("."),
 		},
 		Token {
-			t: Type::OKeyword,
+			t: Type::OpeningKw,
 			c: String::from("si"),
 		},
 		Token {
@@ -675,11 +675,11 @@ fn test_comment_ends_with_new_line() {
 			c: String::new(),
 		},
 		Token {
-			t: Type::OKeyword,
+			t: Type::OpeningKw,
 			c: String::from("si"),
 		},
 		Token {
-			t: Type::RKeyword,
+			t: Type::RegularKw,
 			c: String::from("entonces"),
 		},
 		Token {
@@ -687,7 +687,7 @@ fn test_comment_ends_with_new_line() {
 			c: String::new(),
 		},
 		Token {
-			t: Type::CKeyword,
+			t: Type::ClosingKw,
 			c: String::from("finsi"),
 		},
 	];
