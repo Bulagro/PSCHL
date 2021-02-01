@@ -1,24 +1,26 @@
 {
     "keywords" : {
         "opening" : [
-            "si",
-            "mientras",
-            "para"
+            "Si",
+            "Mientras",
+            "Para"
         ],
         "closing" : [
-            "finsi",
-            "finmientras",
-            "finpara"
+            "FinSi",
+            "FinMientras",
+            "FinPara"
         ],
         "regular" : [
-            "entonces",
-            "hasta"
+            "Entonces",
+            "Hasta",
+            "con",
+            "paso"
         ],
         "comment" : "coment",
-        "name" : "nombre",
-        "input" : "entrada",
-        "output" : "salida",
-        "closing_prefix" : "fin"
+        "name" : "Nombre",
+        "input" : "Entrada",
+        "output" : "Salida",
+        "closing_prefix" : "Fin"
     },
     "themes" : {
         "light" : {

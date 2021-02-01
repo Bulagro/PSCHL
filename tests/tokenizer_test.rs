@@ -3,31 +3,33 @@ use pschl::*;
 fn get_es_keywords() -> &'static str {
     r#"{
         "opening" : [
-            "si",
-            "mientras",
-            "para"
+            "Si",
+            "Mientras",
+            "Para"
         ],
         "closing" : [
-            "finsi",
-            "finmientras",
-            "finpara"
+            "FinSi",
+            "FinMientras",
+            "FinPara"
         ],
         "regular" : [
-            "entonces",
-            "hasta"
+            "Entonces",
+            "Hasta",
+            "con",
+            "paso"
         ],
         "comment" : "coment",
-        "name" : "nombre",
-        "input" : "entrada",
-        "output" : "salida",
-        "closing_prefix" : "fin"
+        "name" : "Nombre",
+        "input" : "Entrada",
+        "output" : "Salida",
+        "closing_prefix" : "Fin"
     }"#
 }
 
 #[test]
 fn test_empty_string() {
     let expected: Vec<Token> = Vec::new();
-    let actual: Vec<Token> = tokenize("", get_es_keywords());
+    let actual: Vec<Token> = tokenize("", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -38,7 +40,7 @@ fn test_single_identifier() {
         t: Type::Identifier,
         c: String::from("hola"),
     }];
-    let actual: Vec<Token> = tokenize("hola", get_es_keywords());
+    let actual: Vec<Token> = tokenize("hola", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -59,7 +61,7 @@ fn test_multiple_identifiers() {
             c: String::from("ayuda"),
         },
     ];
-    let actual: Vec<Token> = tokenize("cosas mundo ayuda", get_es_keywords());
+    let actual: Vec<Token> = tokenize("cosas mundo ayuda", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -70,7 +72,7 @@ fn test_single_keyword() {
         t: Type::OpeningKw,
         c: String::from("si"),
     }];
-    let actual: Vec<Token> = tokenize("si", get_es_keywords());
+    let actual: Vec<Token> = tokenize("si", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -91,7 +93,7 @@ fn test_multiple_keywords() {
             c: String::from("entonces"),
         },
     ];
-    let actual: Vec<Token> = tokenize("si finpara entonces", get_es_keywords());
+    let actual: Vec<Token> = tokenize("si finpara entonces", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -112,7 +114,7 @@ fn test_combined_identifiers_and_keywords() {
             c: String::from("ayuda"),
         },
     ];
-    let actual: Vec<Token> = tokenize("cosas hasta ayuda", get_es_keywords());
+    let actual: Vec<Token> = tokenize("cosas hasta ayuda", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -123,7 +125,7 @@ fn test_single_positive_number() {
         t: Type::Number,
         c: String::from("12"),
     }];
-    let actual: Vec<Token> = tokenize("12", get_es_keywords());
+    let actual: Vec<Token> = tokenize("12", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -140,7 +142,7 @@ fn test_multiple_positive_numbers() {
             c: String::from("23436"),
         },
     ];
-    let actual: Vec<Token> = tokenize("12 23436", get_es_keywords());
+    let actual: Vec<Token> = tokenize("12 23436", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -151,7 +153,7 @@ fn test_identifier_with_numbers_in_between() {
         t: Type::Identifier,
         c: String::from("hola23"),
     }];
-    let actual: Vec<Token> = tokenize("hola23", get_es_keywords());
+    let actual: Vec<Token> = tokenize("hola23", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -168,7 +170,7 @@ fn test_number_does_not_integrate_into_identifier_if_at_beginning() {
             c: String::from("dios"),
         },
     ];
-    let actual: Vec<Token> = tokenize("54dios", get_es_keywords());
+    let actual: Vec<Token> = tokenize("54dios", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -179,7 +181,7 @@ fn test_long_identfier() {
         t: Type::Identifier,
         c: String::from("this_is_a_long_identifier"),
     }];
-    let actual = tokenize("this_is_a_long_identifier", get_es_keywords());
+    let actual = tokenize("this_is_a_long_identifier", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -190,7 +192,7 @@ fn test_single_newline() {
         t: Type::NewLine,
         c: String::new(),
     }];
-    let actual: Vec<Token> = tokenize("\n", get_es_keywords());
+    let actual: Vec<Token> = tokenize("\n", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -225,7 +227,7 @@ fn test_multiple_newlines_with_other_tokens() {
             c: String::new(),
         },
     ];
-    let actual: Vec<Token> = tokenize(input_str, get_es_keywords());
+    let actual: Vec<Token> = tokenize(input_str, get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -250,7 +252,7 @@ fn test_delimiters() {
             c: String::from(")"),
         },
     ];
-    let actual: Vec<Token> = tokenize(",.()", get_es_keywords());
+    let actual: Vec<Token> = tokenize(",.()", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -271,7 +273,7 @@ fn test_delimiters_limit_keywords() {
             c: String::from("32"),
         },
     ];
-    let actual: Vec<Token> = tokenize("hola.32", get_es_keywords());
+    let actual: Vec<Token> = tokenize("hola.32", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -282,7 +284,7 @@ fn test_decimal_notated_numbers_in_single_token() {
         t: Type::Number,
         c: String::from("0.1"),
     }];
-    let actual: Vec<Token> = tokenize("0.1", get_es_keywords());
+    let actual: Vec<Token> = tokenize("0.1", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -303,7 +305,7 @@ fn test_multiple_decimal_notated_numebrs() {
             c: String::from("36450.2"),
         },
     ];
-    let actual: Vec<Token> = tokenize("0.1 10.212453 36450.2", get_es_keywords());
+    let actual: Vec<Token> = tokenize("0.1 10.212453 36450.2", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -324,7 +326,7 @@ fn test_operators() {
             c: String::from("!"),
         },
     ];
-    let actual: Vec<Token> = tokenize("+-!", get_es_keywords());
+    let actual: Vec<Token> = tokenize("+-!", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -353,7 +355,7 @@ fn test_operators_separate_other_tokens() {
             c: String::from("24"),
         },
     ];
-    let actual: Vec<Token> = tokenize("entonces.si+24", get_es_keywords());
+    let actual: Vec<Token> = tokenize("entonces.si+24", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -364,7 +366,7 @@ fn test_negative_number_in_single_token() {
         t: Type::Number,
         c: String::from("-1"),
     }];
-    let actual: Vec<Token> = tokenize("-1", get_es_keywords());
+    let actual: Vec<Token> = tokenize("-1", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -385,7 +387,7 @@ fn test_negative_numbers_in_single_token() {
             c: String::from("-54"),
         },
     ];
-    let actual: Vec<Token> = tokenize("-24 + -54", get_es_keywords());
+    let actual: Vec<Token> = tokenize("-24 + -54", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -396,7 +398,7 @@ fn test_double_char_operator_in_single_token() {
         t: Type::Operator,
         c: String::from("--"),
     }];
-    let actual: Vec<Token> = tokenize("--", get_es_keywords());
+    let actual: Vec<Token> = tokenize("--", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -417,7 +419,7 @@ fn test_multiple_double_char_operators_separated_with_spaces() {
             c: String::from("!="),
         },
     ];
-    let actual: Vec<Token> = tokenize("++ -- !=", get_es_keywords());
+    let actual: Vec<Token> = tokenize("++ -- !=", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -438,7 +440,7 @@ fn test_multiple_double_char_operators_no_spaces_in_between() {
             c: String::from("!="),
         },
     ];
-    let actual: Vec<Token> = tokenize("--++!=", get_es_keywords());
+    let actual: Vec<Token> = tokenize("--++!=", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -455,7 +457,7 @@ fn test_double_char_operators_separate_from_single_char() {
             c: String::from("+"),
         },
     ];
-    let actual: Vec<Token> = tokenize("--+", get_es_keywords());
+    let actual: Vec<Token> = tokenize("--+", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -492,7 +494,7 @@ fn test_only_valid_operators_mix_together() {
             c: String::from("<="),
         },
     ];
-    let actual: Vec<Token> = tokenize("-+-++=!<=", get_es_keywords());
+    let actual: Vec<Token> = tokenize("-+-++=!<=", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -503,7 +505,7 @@ fn floating_point_negative_number_in_single_token() {
         t: Type::Number,
         c: String::from("-0.1"),
     }];
-    let actual: Vec<Token> = tokenize("-0.1", get_es_keywords());
+    let actual: Vec<Token> = tokenize("-0.1", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -524,7 +526,7 @@ fn floating_point_negateive_numbers_in_single_token() {
             c: String::from("-45"),
         },
     ];
-    let actual: Vec<Token> = tokenize("-234.34 a -45", get_es_keywords());
+    let actual: Vec<Token> = tokenize("-234.34 a -45", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -536,7 +538,7 @@ fn test_basic_string() {
         c: String::from("\"hola\""),
     }];
 
-    let actual: Vec<Token> = tokenize("\"hola\"", get_es_keywords());
+    let actual: Vec<Token> = tokenize("\"hola\"", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -557,7 +559,7 @@ fn test_string_and_identifiers() {
             c: String::from("saf"),
         },
     ];
-    let actual: Vec<Token> = tokenize("dsf \"this is a string\" saf", get_es_keywords());
+    let actual: Vec<Token> = tokenize("dsf \"this is a string\" saf", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -568,7 +570,7 @@ fn test_strings_include_numbers_and_identifiers() {
         t: Type::String,
         c: String::from("\"123.234+34\""),
     }];
-    let actual: Vec<Token> = tokenize("\"123.234+34\"", get_es_keywords());
+    let actual: Vec<Token> = tokenize("\"123.234+34\"", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -583,7 +585,11 @@ fn test_multiline_string() {
         \"",
         ),
     }];
-    let actual: Vec<Token> = tokenize("\"\n        something\n        \"", get_es_keywords());
+    let actual: Vec<Token> = tokenize(
+        "\"\n        something\n        \"",
+        get_es_keywords(),
+        false,
+    );
 
     assert_eq!(expected, actual);
 }
@@ -594,7 +600,7 @@ fn test_string_with_other_chars() {
         t: Type::String,
         c: String::from("\"%·$/&:\""),
     }];
-    let actual: Vec<Token> = tokenize("\"%·$/&:\"", get_es_keywords());
+    let actual: Vec<Token> = tokenize("\"%·$/&:\"", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -605,7 +611,7 @@ fn test_string_with_escaped_quotes() {
         t: Type::String,
         c: String::from("\" \\\" \""),
     }];
-    let actual: Vec<Token> = tokenize("\" \\\" \"", get_es_keywords());
+    let actual: Vec<Token> = tokenize("\" \\\" \"", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -616,7 +622,7 @@ fn test_simple_comment_token() {
         t: Type::Comment,
         c: String::from("coment: hola"),
     }];
-    let actual: Vec<Token> = tokenize("coment: hola", get_es_keywords());
+    let actual: Vec<Token> = tokenize("coment: hola", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -641,7 +647,11 @@ fn test_comment_after_something() {
             c: String::from("coment: esta es una operación"),
         },
     ];
-    let actual: Vec<Token> = tokenize("a + 2 coment: esta es una operación", get_es_keywords());
+    let actual: Vec<Token> = tokenize(
+        "a + 2 coment: esta es una operación",
+        get_es_keywords(),
+        false,
+    );
 
     assert_eq!(expected, actual);
 }
@@ -652,7 +662,7 @@ fn test_after_comment_no_other_identifier_is_counted_as_such() {
         t: Type::Comment,
         c: String::from("coment: a + 2"),
     }];
-    let actual: Vec<Token> = tokenize("coment: a + 2", get_es_keywords());
+    let actual: Vec<Token> = tokenize("coment: a + 2", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -702,7 +712,7 @@ fn test_comment_ends_with_new_line() {
             c: String::from("finsi"),
         },
     ];
-    let actual: Vec<Token> = tokenize(input_str, get_es_keywords());
+    let actual: Vec<Token> = tokenize(input_str, get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -713,7 +723,7 @@ fn test_name_token() {
         t: Type::Name,
         c: String::from("nombre: Algoritmo"),
     }];
-    let actual: Vec<Token> = tokenize("nombre: Algoritmo", get_es_keywords());
+    let actual: Vec<Token> = tokenize("nombre: Algoritmo", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -724,7 +734,7 @@ fn test_input_token() {
         t: Type::Input,
         c: String::from("entrada: a"),
     }];
-    let actual: Vec<Token> = tokenize("entrada: a", get_es_keywords());
+    let actual: Vec<Token> = tokenize("entrada: a", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -735,7 +745,7 @@ fn test_output_token() {
         t: Type::Output,
         c: String::from("salida: a, b, c"),
     }];
-    let actual: Vec<Token> = tokenize("salida: a, b, c", get_es_keywords());
+    let actual: Vec<Token> = tokenize("salida: a, b, c", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }
@@ -756,7 +766,18 @@ fn test_mixed_case_keywords() {
             c: String::from("FinPara"),
         },
     ];
-    let actual = tokenize("Si EntOnces FinPara", get_es_keywords());
+    let actual = tokenize("Si EntOnces FinPara", get_es_keywords(), false);
+
+    assert_eq!(actual, expected);
+}
+
+#[test]
+fn test_corrected_keyword() {
+    let expected = vec![Token {
+        t: Type::OpeningKw,
+        c: String::from("Si"),
+    }];
+    let actual = tokenize("si", get_es_keywords(), true);
 
     assert_eq!(actual, expected);
 }

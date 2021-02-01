@@ -36,7 +36,7 @@ fn test_empty_input() {
 
 #[test]
 fn test_new_line_adds_empty_line() {
-    let tokens = tokenize("\n", get_es_keywords());
+    let tokens = tokenize("\n", get_es_keywords(), false);
 
     let expected = vec![Line {
         indent: 0,
@@ -49,7 +49,7 @@ fn test_new_line_adds_empty_line() {
 
 #[test]
 fn test_single_line() {
-    let tokens = tokenize("single line 123 -", get_es_keywords());
+    let tokens = tokenize("single line 123 -", get_es_keywords(), false);
 
     let expected = vec![Line {
         indent: 0,
@@ -82,6 +82,7 @@ fn test_lines_with_same_indent_level() {
     let tokens = tokenize(
         "single line 123 - \n this is another line",
         get_es_keywords(),
+        false,
     );
 
     let expected = vec![
@@ -135,7 +136,7 @@ fn test_lines_with_same_indent_level() {
 
 #[test]
 fn test_opening_keyword_increases_indent_level_for_the_next_lin() {
-    let tokens = tokenize("si 1 + 2 entonces\nhaz algo", get_es_keywords());
+    let tokens = tokenize("si 1 + 2 entonces\nhaz algo", get_es_keywords(), false);
 
     let expected = vec![
         Line {
@@ -184,7 +185,7 @@ fn test_opening_keyword_increases_indent_level_for_the_next_lin() {
 
 #[test]
 fn test_nested_opening_keywords() {
-    let tokens = tokenize("si a \n si b\n1", get_es_keywords());
+    let tokens = tokenize("si a \n si b\n1", get_es_keywords(), false);
 
     let expected = vec![
         Line {
@@ -228,7 +229,7 @@ fn test_nested_opening_keywords() {
 
 #[test]
 fn test_closing_keywords() {
-    let tokens = tokenize("si a\nfinsi", get_es_keywords());
+    let tokens = tokenize("si a\nfinsi", get_es_keywords(), false);
 
     let expected = vec![
         Line {
@@ -259,7 +260,7 @@ fn test_closing_keywords() {
 
 #[test]
 fn test_outdent_cant_be_below_0() {
-    let tokens = tokenize("finsi", get_es_keywords());
+    let tokens = tokenize("finsi", get_es_keywords(), false);
 
     let expected = vec![Line {
         indent: 0,

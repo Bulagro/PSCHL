@@ -54,7 +54,7 @@ pub struct Line {
     pub tokens: Vec<Token>,
 }
 
-pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
+pub fn tokenize(input_str: &str, lang_config_str: &str, correct_case: bool) -> Vec<Token> {
     let keywords: Keywords = serde_json::from_str(lang_config_str).unwrap();
 
     let mut tokens: Vec<Token> = Vec::new();
@@ -86,7 +86,14 @@ pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
             } else {
                 if !token_content.is_empty() {
                     if token_type == Type::Identifier {
-                        token_type = get_keyword_type_if_applicable(&token_content, &keywords);
+                        let data = construct_identifier_token(
+                            &token_content,
+                            token_type,
+                            &keywords,
+                            correct_case,
+                        );
+                        token_type = data.0;
+                        token_content = data.1;
                     }
 
                     tokens.push(Token {
@@ -110,7 +117,14 @@ pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
                     if token_type == Type::String {
                         token_content = format!("\"{}\"", &token_content);
                     } else if token_type == Type::Identifier {
-                        token_type = get_keyword_type_if_applicable(&token_content, &keywords);
+                        let data = construct_identifier_token(
+                            &token_content,
+                            token_type,
+                            &keywords,
+                            correct_case,
+                        );
+                        token_type = data.0;
+                        token_content = data.1;
                     }
 
                     tokens.push(Token {
@@ -146,7 +160,10 @@ pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
             token_content += &c.to_string();
         } else if DELIMITERS.contains(c) {
             if token_type == Type::Identifier {
-                token_type = get_keyword_type_if_applicable(&token_content, &keywords);
+                let data =
+                    construct_identifier_token(&token_content, token_type, &keywords, correct_case);
+                token_type = data.0;
+                token_content = data.1;
             }
 
             if LINE_TOKENS.contains(&token_type) {
@@ -173,7 +190,14 @@ pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
             } else {
                 if !token_content.is_empty() {
                     if token_type == Type::Identifier {
-                        token_type = get_keyword_type_if_applicable(&token_content, &keywords);
+                        let data = construct_identifier_token(
+                            &token_content,
+                            token_type,
+                            &keywords,
+                            correct_case,
+                        );
+                        token_type = data.0;
+                        token_content = data.1;
                     }
 
                     tokens.push(Token {
@@ -199,7 +223,10 @@ pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
 
     if !token_content.is_empty() {
         if token_type == Type::Identifier {
-            token_type = get_keyword_type_if_applicable(&token_content, &keywords);
+            let data =
+                construct_identifier_token(&token_content, token_type, &keywords, correct_case);
+            token_type = data.0;
+            token_content = data.1;
         }
 
         tokens.push(Token {
@@ -211,8 +238,16 @@ pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
     combine_tokens(tokens)
 }
 
-fn get_keyword_type_if_applicable(token_content: &str, keywords: &Keywords) -> Type {
-    let token_content = token_content.to_string().to_lowercase();
+fn construct_identifier_token(
+    token_content: &str,
+    token_type: Type,
+    keywords: &Keywords,
+    correct_case: bool,
+) -> (Type, String) {
+    let mut content = token_content.to_string();
+    let mut t_type = token_type;
+    let lc = content.to_lowercase();
+
     let l = [
         (Type::OpeningKw, &keywords.opening),
         (Type::ClosingKw, &keywords.closing),
@@ -220,32 +255,45 @@ fn get_keyword_type_if_applicable(token_content: &str, keywords: &Keywords) -> T
     ];
 
     for (t, k) in l.iter() {
-        if k.contains(&token_content) {
-            return *t;
+        let index = k.iter().position(|r| r.to_lowercase() == lc);
+
+        if index != None {
+            if correct_case {
+                content = k[index.unwrap()].clone();
+            }
+
+            return (*t, content);
         }
     }
 
-    // Why does rust not like this? WHY?!
-    // match token_content {
-    //     keywords.comment => Type::Comment,
-    //     keywords.name => Type::Name,
-    //     keywords.input => Type::Input,
-    //     keywords.output => Type::Output,
-    //     _ => Type::Identifier,
-    // }
+    // So it's not a keyword...
+    if lc == keywords.comment.to_lowercase() {
+        if correct_case {
+            content = keywords.comment.clone();
+        }
 
-    // Why doesn't clippy complain? WHY?!
-    if token_content == keywords.comment {
-        Type::Comment
-    } else if token_content == keywords.name {
-        Type::Name
-    } else if token_content == keywords.input {
-        Type::Input
-    } else if token_content == keywords.output {
-        Type::Output
-    } else {
-        Type::Identifier
+        t_type = Type::Comment;
+    } else if lc == keywords.name.to_lowercase() {
+        if correct_case {
+            content = keywords.name.clone();
+        }
+
+        t_type = Type::Name;
+    } else if lc == keywords.input.to_lowercase() {
+        if correct_case {
+            content = keywords.input.clone();
+        }
+
+        t_type = Type::Input;
+    } else if lc == keywords.output.to_lowercase() {
+        if correct_case {
+            content = keywords.output.clone();
+        }
+
+        t_type = Type::Output;
     }
+
+    (t_type, content)
 }
 
 fn combine_tokens(tokens: Vec<Token>) -> Vec<Token> {
