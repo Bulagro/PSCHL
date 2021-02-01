@@ -287,13 +287,7 @@ pub fn get_updated_json_with_name(tokens: &[Token], lang_config_str: &str) -> St
 		return serde_json::to_string(&keywords).unwrap();
 	}
 
-	let mut name_index: usize = 0;
-	for (i, token) in tokens.iter().enumerate() {
-		if token.t == Type::Name {
-			name_index = i;
-			break;
-		}
-	}
+	let name_index = tokens.iter().take_while(|token| token.t != Type::Name).count();
 
 	let name: String = tokens[name_index]
 		.c
