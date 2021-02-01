@@ -54,7 +54,7 @@ pub struct Line {
     pub tokens: Vec<Token>,
 }
 
-pub fn tokenize(input_str: &str, lang_config_str: &str, correct_case: bool) -> Vec<Token> {
+pub fn tokenize(input_str: &str, lang_config_str: &str, capitalize_keywords: bool) -> Vec<Token> {
     let keywords: Keywords = serde_json::from_str(lang_config_str).unwrap();
 
     let mut tokens: Vec<Token> = Vec::new();
@@ -90,7 +90,7 @@ pub fn tokenize(input_str: &str, lang_config_str: &str, correct_case: bool) -> V
                             &token_content,
                             token_type,
                             &keywords,
-                            correct_case,
+                            capitalize_keywords,
                         );
                         token_type = data.0;
                         token_content = data.1;
@@ -121,7 +121,7 @@ pub fn tokenize(input_str: &str, lang_config_str: &str, correct_case: bool) -> V
                             &token_content,
                             token_type,
                             &keywords,
-                            correct_case,
+                            capitalize_keywords,
                         );
                         token_type = data.0;
                         token_content = data.1;
@@ -160,8 +160,12 @@ pub fn tokenize(input_str: &str, lang_config_str: &str, correct_case: bool) -> V
             token_content += &c.to_string();
         } else if DELIMITERS.contains(c) {
             if token_type == Type::Identifier {
-                let data =
-                    construct_identifier_token(&token_content, token_type, &keywords, correct_case);
+                let data = construct_identifier_token(
+                    &token_content,
+                    token_type,
+                    &keywords,
+                    capitalize_keywords,
+                );
                 token_type = data.0;
                 token_content = data.1;
             }
@@ -194,7 +198,7 @@ pub fn tokenize(input_str: &str, lang_config_str: &str, correct_case: bool) -> V
                             &token_content,
                             token_type,
                             &keywords,
-                            correct_case,
+                            capitalize_keywords,
                         );
                         token_type = data.0;
                         token_content = data.1;
@@ -223,8 +227,12 @@ pub fn tokenize(input_str: &str, lang_config_str: &str, correct_case: bool) -> V
 
     if !token_content.is_empty() {
         if token_type == Type::Identifier {
-            let data =
-                construct_identifier_token(&token_content, token_type, &keywords, correct_case);
+            let data = construct_identifier_token(
+                &token_content,
+                token_type,
+                &keywords,
+                capitalize_keywords,
+            );
             token_type = data.0;
             token_content = data.1;
         }
@@ -242,7 +250,7 @@ fn construct_identifier_token(
     token_content: &str,
     token_type: Type,
     keywords: &Keywords,
-    correct_case: bool,
+    capitalize_keywords: bool,
 ) -> (Type, String) {
     let mut content = token_content.to_string();
     let mut t_type = token_type;
@@ -258,7 +266,7 @@ fn construct_identifier_token(
         let index = k.iter().position(|r| r.to_lowercase() == lc);
 
         if index != None {
-            if correct_case {
+            if capitalize_keywords {
                 content = k[index.unwrap()].clone();
             }
 
@@ -268,25 +276,25 @@ fn construct_identifier_token(
 
     // So it's not a keyword...
     if lc == keywords.comment.to_lowercase() {
-        if correct_case {
+        if capitalize_keywords {
             content = keywords.comment.clone();
         }
 
         t_type = Type::Comment;
     } else if lc == keywords.name.to_lowercase() {
-        if correct_case {
+        if capitalize_keywords {
             content = keywords.name.clone();
         }
 
         t_type = Type::Name;
     } else if lc == keywords.input.to_lowercase() {
-        if correct_case {
+        if capitalize_keywords {
             content = keywords.input.clone();
         }
 
         t_type = Type::Input;
     } else if lc == keywords.output.to_lowercase() {
-        if correct_case {
+        if capitalize_keywords {
             content = keywords.output.clone();
         }
 
