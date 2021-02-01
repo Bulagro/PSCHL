@@ -119,7 +119,7 @@ pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
 			} else if token_content.is_empty() {
 				token_type = Type::String;
 			}
-		} else if c.is_alphabetic() {
+		} else if c.is_alphabetic() || c == '_' {
 			if token_content.is_empty() && !LINE_TOKENS.contains(&token_type) {
 				token_type = Type::Identifier;
 			} else if token_type == Type::Number {
@@ -221,11 +221,11 @@ fn get_keyword_type_if_applicable(token_content: &str, keywords: &Keywords) -> T
 
 	// Why does rust not like this? WHY?!
 	// match token_content {
-	// 	keywords.comment => Type::Comment,
-	// 	keywords.name => Type::Name,
-	// 	keywords.input => Type::Input,
-	// 	keywords.output => Type::Output,
-	// 	_ => Type::Identifier,
+	//     keywords.comment => Type::Comment,
+	//     keywords.name => Type::Name,
+	//     keywords.input => Type::Input,
+	//     keywords.output => Type::Output,
+	//     _ => Type::Identifier,
 	// }
 
 	// Why doesn't clippy complain? WHY?!
@@ -297,7 +297,10 @@ pub fn get_updated_json_with_name(tokens: &[Token], lang_config_str: &str) -> St
 		return serde_json::to_string(&keywords).unwrap();
 	}
 
-	let name_index = tokens.iter().take_while(|token| token.t != Type::Name).count();
+	let name_index = tokens
+		.iter()
+		.take_while(|token| token.t != Type::Name)
+		.count();
 
 	let name: String = tokens[name_index]
 		.c

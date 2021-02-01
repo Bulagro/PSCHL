@@ -175,13 +175,13 @@ fn test_number_does_not_integrate_into_identifier_if_at_beginning() {
 
 #[test]
 fn test_long_identfier() {
-    let expected: Vec<Token> = vec![Token {
-        t: Type::Identifier,
-        c: String::from("this_is_a_long_identifier"),
-    }];
-    let actual = tokenize("this_is_a_long_identifier", get_es_keywords());
+	let expected: Vec<Token> = vec![Token {
+		t: Type::Identifier,
+		c: String::from("this_is_a_long_identifier"),
+	}];
+	let actual = tokenize("this_is_a_long_identifier", get_es_keywords());
 
-    assert_eq!(expected, actual);
+	assert_eq!(expected, actual);
 }
 
 #[test]
