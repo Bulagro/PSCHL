@@ -6,6 +6,13 @@ const DELIMITERS: &str = "(){}[].,:;";
 const OPERATORS: &str = "+-*/=!<>";
 const DOUBLE_CHAR_OPERATORS: [&str; 10] =
     ["==", "!=", "<=", ">=", "++", "--", "+=", "-=", "*=", "/="];
+const LINE_TOKENS: [Type; 5] = [
+    Type::Comment,
+    Type::Name,
+    Type::Input,
+    Type::Output,
+    Type::String,
+];
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Type {
@@ -18,6 +25,10 @@ pub enum Type {
     Delimiter,
     Identifier,
     NewLine,
+    Comment,
+    Name,
+    Input,
+    Output,
     None,
 }
 
@@ -32,6 +43,10 @@ struct Keywords {
     opening: Vec<String>,
     closing: Vec<String>,
     regular: Vec<String>,
+    comment: String,
+    name: String,
+    input: String,
+    output: String,
 }
 
 pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<Token> {
@@ -47,6 +62,22 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
         if c == ' ' || c == '\n' {
             if token_type == Type::String {
                 token_content += &c.to_string();
+            } else if LINE_TOKENS.contains(&token_type) {
+                if c == '\n' {
+                    tokens.push(Token {
+                        t: token_type,
+                        c: token_content.clone(),
+                    });
+                    tokens.push(Token {
+                        t: Type::NewLine,
+                        c: String::new(),
+                    });
+
+                    token_type = Type::None;
+                    token_content.clear();
+                } else {
+                    token_content += &c.to_string();
+                }
             } else {
                 if !token_content.is_empty() {
                     if token_type == Type::Identifier {
@@ -90,7 +121,7 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
                 token_type = Type::String;
             }
         } else if IDENTIFIER_CHARS.contains(c) {
-            if token_content.is_empty() && token_type != Type::String {
+            if token_content.is_empty() && !LINE_TOKENS.contains(&token_type) {
                 token_type = Type::Identifier;
             } else if token_type == Type::Number {
                 tokens.push(Token {
@@ -103,20 +134,20 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
 
             token_content += &c.to_string();
         } else if DIGITS.contains(c) {
-            if token_content.is_empty() && token_type != Type::String {
+            if token_content.is_empty() && !LINE_TOKENS.contains(&token_type) {
                 token_type = Type::Number;
             }
 
             token_content += &c.to_string();
         } else if DELIMITERS.contains(c) {
-            if token_type == Type::String {
+            if token_type == Type::Identifier {
+                token_type = get_keyword_type_if_applicable(&token_content, &keywords);
+            }
+
+            if LINE_TOKENS.contains(&token_type) {
                 token_content += &c.to_string();
             } else {
                 if !token_content.is_empty() {
-                    if token_type == Type::Identifier {
-                        token_type = get_keyword_type_if_applicable(&token_content, &keywords);
-                    }
-
                     tokens.push(Token {
                         t: token_type,
                         c: token_content.clone(),
@@ -132,7 +163,7 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
                 token_content.clear();
             }
         } else if OPERATORS.contains(c) {
-            if token_type == Type::String {
+            if LINE_TOKENS.contains(&token_type) {
                 token_content += &c.to_string();
             } else {
                 if !token_content.is_empty() {
@@ -154,7 +185,7 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
                 token_type = Type::None;
                 token_content.clear();
             }
-        } else if token_type == Type::String {
+        } else if LINE_TOKENS.contains(&token_type) {
             token_content += &c.to_string();
         }
 
@@ -168,7 +199,7 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
 
         tokens.push(Token {
             t: token_type,
-            c: token_content.clone(),
+            c: token_content,
         });
     }
 
@@ -189,11 +220,21 @@ fn get_keyword_type_if_applicable<'a>(token_content: &'a str, keywords: &'a Keyw
         }
     }
 
-    Type::Identifier
+    if token_content == keywords.comment {
+        Type::Comment
+    } else if token_content == keywords.name {
+        Type::Name
+    } else if token_content == keywords.input {
+        Type::Input
+    } else if token_content == keywords.output {
+        Type::Output
+    } else {
+        Type::Identifier
+    }
 }
 
 fn combine_tokens(tokens: Vec<Token>) -> Vec<Token> {
-    if tokens.len() == 0 {
+    if tokens.is_empty() {
         return tokens;
     }
 

@@ -15,7 +15,11 @@ fn get_es_keywords() -> &'static str {
         "regular" : [
             "entonces",
             "hasta"
-        ]
+        ],
+        "comment" : "coment",
+        "name" : "nombre",
+        "input" : "entrada",
+        "output" : "salida"
     }"#
 }
 
@@ -576,9 +580,9 @@ fn test_multiline_string() {
 fn test_string_with_other_chars() {
     let expected: Vec<Token> = vec![Token {
         t: Type::String,
-        c: String::from("\"%·$/&\""),
+        c: String::from("\"%·$/&:\""),
     }];
-    let actual: Vec<Token> = tokenize("\"%·$/&\"", get_es_keywords());
+    let actual: Vec<Token> = tokenize("\"%·$/&:\"", get_es_keywords());
 
     assert_eq!(expected, actual);
 }
@@ -590,6 +594,103 @@ fn test_string_with_escaped_quotes() {
         c: String::from("\" \\\" \""),
     }];
     let actual: Vec<Token> = tokenize("\" \\\" \"", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_simple_comment_token() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Comment,
+        c: String::from("coment: hola"),
+    }];
+    let actual: Vec<Token> = tokenize("coment: hola", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_comment_after_something() {
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Identifier,
+            c: String::from("a"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("+"),
+        },
+        Token {
+            t: Type::Number,
+            c: String::from("2"),
+        },
+        Token {
+            t: Type::Comment,
+            c: String::from("coment: esta es una operación"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize("a + 2 coment: esta es una operación", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_after_comment_no_other_identifier_is_counted_as_such() {
+    let expected: Vec<Token> = vec![Token {
+        t: Type::Comment,
+        c: String::from("coment: a + 2"),
+    }];
+    let actual: Vec<Token> = tokenize("coment: a + 2", get_es_keywords());
+
+    assert_eq!(expected, actual);
+}
+
+#[test]
+fn test_comment_ends_with_new_line() {
+    let input_str = " \
+    a + b coment: esta es una suma
+    si entonces
+    finsi";
+
+    let expected: Vec<Token> = vec![
+        Token {
+            t: Type::Identifier,
+            c: String::from("a"),
+        },
+        Token {
+            t: Type::Operator,
+            c: String::from("+"),
+        },
+        Token {
+            t: Type::Identifier,
+            c: String::from("b"),
+        },
+        Token {
+            t: Type::Comment,
+            c: String::from("coment: esta es una suma"),
+        },
+        Token {
+            t: Type::NewLine,
+            c: String::new(),
+        },
+        Token {
+            t: Type::OKeyword,
+            c: String::from("si"),
+        },
+        Token {
+            t: Type::RKeyword,
+            c: String::from("entonces"),
+        },
+        Token {
+            t: Type::NewLine,
+            c: String::new(),
+        },
+        Token {
+            t: Type::CKeyword,
+            c: String::from("finsi"),
+        },
+    ];
+    let actual: Vec<Token> = tokenize(input_str, get_es_keywords());
 
     assert_eq!(expected, actual);
 }
