@@ -219,6 +219,16 @@ fn get_keyword_type_if_applicable(token_content: &str, keywords: &Keywords) -> T
 		}
 	}
 
+	// Why does rust not like this? WHY?!
+	// match token_content {
+	// 	keywords.comment => Type::Comment,
+	// 	keywords.name => Type::Name,
+	// 	keywords.input => Type::Input,
+	// 	keywords.output => Type::Output,
+	// 	_ => Type::Identifier,
+	// }
+
+	// Why doesn't clippy complain? WHY?!
 	if token_content == keywords.comment {
 		Type::Comment
 	} else if token_content == keywords.name {
