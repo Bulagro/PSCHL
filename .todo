@@ -1,35 +1,3 @@
-TOKENIZER:
-    ☐ Distinguish between:
-        ✔ Numbers @done(21-01-25 11:53)
-        ✔ Identifiers @done(21-01-25 11:53)
-        ✔ Operators @done(21-01-25 18:25)
-        ✔ Strings @done(21-01-25 15:36)
-        ✔ Keywords @done(21-01-25 21:45)
-            ☐ End<AlgorithmName> keyword
-        ✔ Newlines @done(21-01-25 18:26)
-        ✔ Delimiters @done(21-01-25 21:25)
-        ☐ Comments
-        ☐ Algorithm data:
-            ☐ Name
-            ☐ Input
-            ☐ Output
-
-    ✔ Distinguish between opening and closing tokens @done(21-01-28 14:30)
-    ✔ Allow identifiers starting with number? @done(21-01-25 15:43)
-    ✔ Allow decimal point numbers @done(21-01-25 21:30)
-    ✔ Rename Other to Identifier @done(21-01-25 21:46)
-    ☐ Limit to only valid operators
-
-IMAGE GENERATOR:
-    ☐ Determine image dimensions
-    ✘ Determine char spacing @cancelled(21-01-28 17:13)
-        ✔ Make my own text-drawer function, with my own spacing. @done(21-01-29 14:20)
-
-FORMATTER:
-    ✔ Fix indentation level @done(21-01-28 18:44)
-    ☐ Maybe rename to 'indenter'?
-    ☐ Return minimum required space (in chars)
-
 RE-WRITE:
     ☐ Rewrite Tokenizer and Formatter in Rust.
         They will then be WASM'd and then I'll display this thing dynamically (with some js magic)
@@ -38,6 +6,7 @@ RE-WRITE:
             How do I want to deal with this?
             My idea is to have the main js script pass on a string and then have rust deserialize it.
             To deal with that, I'll have to add the json file and serve it with github pages. @high
+        ✔ Serialize json to pass on the <endAlgorithm> token. @done(21-01-31 21:03)
 
         Tokenizer:
             ✔ Numbers @done(21-01-30 22:09)
@@ -48,6 +17,7 @@ RE-WRITE:
                 ✔ Numbers in between @done(21-01-30 22:09)
                 ✔ Keywords @done(21-01-30 21:57)
                     ✔ Distinguish between opening, closing and 'regular' keywords @done(21-01-30 21:57)
+                    ✔ End<AlgorithmName> keyword @done(21-01-31 21:03)
             ✔ Operators @done(21-01-31 00:02)
                 ✔ Limit to only valid operators @done(21-01-31 14:04)
             ✔ Strings @done(21-01-31 16:33)
@@ -59,6 +29,6 @@ RE-WRITE:
                 ✔ Input @done(21-01-31 19:35)
                 ✔ Output @done(21-01-31 19:35)
                 ☐ Parse data:
-                    ☐ Parse name
-                        ☐ Add <endAlgorithm> token to closing token list
+                    ✔ Parse name @done(21-01-31 21:03)
+                        ✔ Add <endAlgorithm> token to closing token list @done(21-01-31 21:03)
                     ☐ Parse input and output

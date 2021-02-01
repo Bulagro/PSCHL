@@ -19,7 +19,8 @@ fn get_es_keywords() -> &'static str {
         "comment" : "coment",
         "name" : "nombre",
         "input" : "entrada",
-        "output" : "salida"
+        "output" : "salida",
+        "closing_prefix" : "fin"
     }"#
 }
 

@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 const IDENTIFIER_CHARS: &str = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ_";
 const DIGITS: &str = "0123456789";
@@ -38,8 +38,8 @@ pub struct Token {
     pub c: String,
 }
 
-#[derive(Deserialize, Debug)]
-struct Keywords {
+#[derive(Deserialize, Debug, Serialize)]
+pub struct Keywords {
     opening: Vec<String>,
     closing: Vec<String>,
     regular: Vec<String>,
@@ -47,6 +47,7 @@ struct Keywords {
     name: String,
     input: String,
     output: String,
+    closing_prefix: String,
 }
 
 pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<Token> {
@@ -279,4 +280,35 @@ fn combine_tokens(tokens: Vec<Token>) -> Vec<Token> {
     }
 
     tokens
+}
+
+pub fn get_updated_json_with_name(tokens: &Vec<Token>, lang_config_str: &'static str) -> String {
+    let mut keywords: Keywords = serde_json::from_str(lang_config_str).unwrap();
+
+    if tokens.is_empty() {
+        return serde_json::to_string(&keywords).unwrap();
+    }
+
+    let mut name_index: usize = 0;
+    for (i, token) in tokens.iter().enumerate() {
+        if token.t == Type::Name {
+            name_index = i;
+            break;
+        }
+    }
+
+    let name: String = tokens[name_index]
+        .c
+        .strip_prefix(&format!("{}:", &keywords.name))
+        .unwrap()
+        .split_whitespace()
+        .collect();
+
+    if !name.is_empty() {
+        keywords
+            .closing
+            .push(format!("{}{}", keywords.closing_prefix, name));
+    }
+
+    serde_json::to_string(&keywords).unwrap()
 }
