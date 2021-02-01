@@ -30,7 +30,7 @@ pub enum Type {
 	None,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Token {
 	pub t: Type,
 	pub c: String,
@@ -46,6 +46,12 @@ pub struct Keywords {
 	input: String,
 	output: String,
 	closing_prefix: String,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct Line {
+	pub indent: u32,
+	pub tokens: Vec<Token>,
 }
 
 pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
@@ -316,4 +322,51 @@ pub fn get_updated_json_with_name(tokens: &[Token], lang_config_str: &str) -> St
 	}
 
 	serde_json::to_string(&keywords).unwrap()
+}
+
+pub fn indent(tokens: &Vec<Token>) -> Vec<Line> {
+	let mut indent_level: u32 = 0;
+	let mut increase_indent = false;
+	let mut line_tokens: Vec<Token> = Vec::new();
+	let mut indented_lines: Vec<Line> = Vec::new();
+
+	for token in tokens.iter() {
+		match token.t {
+			Type::NewLine => {
+				indented_lines.push(Line {
+					tokens: line_tokens.clone(),
+					indent: indent_level,
+				});
+
+				line_tokens.clear();
+
+				if increase_indent {
+					indent_level += 1;
+					increase_indent = false;
+				}
+			}
+			Type::OpeningKw => {
+				increase_indent = true;
+				line_tokens.push(token.clone());
+			}
+			Type::ClosingKw => {
+				if indent_level > 0 {
+					indent_level -= 1;
+				}
+
+				line_tokens.push(token.clone());
+				increase_indent = false;
+			}
+			_ => line_tokens.push(token.clone()),
+		}
+	}
+
+	if !line_tokens.is_empty() {
+		indented_lines.push(Line {
+			tokens: line_tokens.clone(),
+			indent: indent_level,
+		});
+	}
+
+	indented_lines
 }
