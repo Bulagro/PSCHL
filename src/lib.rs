@@ -324,7 +324,7 @@ pub fn get_updated_json_with_name(tokens: &[Token], lang_config_str: &str) -> St
     serde_json::to_string(&keywords).unwrap()
 }
 
-pub fn indent(tokens: &Vec<Token>) -> Vec<Line> {
+pub fn indent(tokens: &[Token]) -> Vec<Line> {
     let mut indent_level: u32 = 0;
     let mut increase_indent = false;
     let mut line_tokens: Vec<Token> = Vec::new();
@@ -363,7 +363,7 @@ pub fn indent(tokens: &Vec<Token>) -> Vec<Line> {
 
     if !line_tokens.is_empty() {
         indented_lines.push(Line {
-            tokens: line_tokens.clone(),
+            tokens: line_tokens,
             indent: indent_level,
         });
     }
