@@ -13,7 +13,11 @@
         "regular" : [
             "entonces",
             "hasta"
-        ]
+        ],
+        "comment" : "coment",
+        "name" : "nombre",
+        "input" : "entrada",
+        "output" : "salida"
     },
     "themes" : {
         "light" : {
