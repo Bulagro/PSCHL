@@ -1,7 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-const IDENTIFIER_CHARS: &str = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ_";
-const DIGITS: &str = "0123456789";
 const DELIMITERS: &str = "(){}[].,:;";
 const OPERATORS: &str = "+-*/=!<>";
 const DOUBLE_CHAR_OPERATORS: [&str; 10] =
@@ -50,7 +48,7 @@ pub struct Keywords {
 	closing_prefix: String,
 }
 
-pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<Token> {
+pub fn tokenize(input_str: &str, lang_config_str: &str) -> Vec<Token> {
 	let keywords: Keywords = serde_json::from_str(lang_config_str).unwrap();
 
 	let mut tokens: Vec<Token> = Vec::new();
@@ -60,7 +58,7 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
 	let mut last_char: char = ' ';
 
 	for c in input_str.chars() {
-		if c == ' ' || c == '\n' {
+		if c.is_whitespace() {
 			if token_type == Type::String {
 				token_content += &c.to_string();
 			} else if LINE_TOKENS.contains(&token_type) {
@@ -121,7 +119,7 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
 			} else if token_content.is_empty() {
 				token_type = Type::String;
 			}
-		} else if IDENTIFIER_CHARS.contains(c) {
+		} else if c.is_alphabetic() {
 			if token_content.is_empty() && !LINE_TOKENS.contains(&token_type) {
 				token_type = Type::Identifier;
 			} else if token_type == Type::Number {
@@ -134,7 +132,7 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
 			}
 
 			token_content += &c.to_string();
-		} else if DIGITS.contains(c) {
+		} else if c.is_digit(10) {
 			if token_content.is_empty() && !LINE_TOKENS.contains(&token_type) {
 				token_type = Type::Number;
 			}
@@ -207,7 +205,7 @@ pub fn tokenize<'a>(input_str: &'a str, lang_config_str: &'static str) -> Vec<To
 	combine_tokens(tokens)
 }
 
-fn get_keyword_type_if_applicable<'a>(token_content: &'a str, keywords: &'a Keywords) -> Type {
+fn get_keyword_type_if_applicable(token_content: &str, keywords: &Keywords) -> Type {
 	let token_content = token_content.to_string();
 	let l = [
 		(Type::OKeyword, &keywords.opening),
@@ -282,7 +280,7 @@ fn combine_tokens(tokens: Vec<Token>) -> Vec<Token> {
 	tokens
 }
 
-pub fn get_updated_json_with_name(tokens: &Vec<Token>, lang_config_str: &'static str) -> String {
+pub fn get_updated_json_with_name(tokens: &[Token], lang_config_str: &str) -> String {
 	let mut keywords: Keywords = serde_json::from_str(lang_config_str).unwrap();
 
 	if tokens.is_empty() {
