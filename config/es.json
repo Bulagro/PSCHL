@@ -66,6 +66,13 @@
                 "enable-background" : false,
                 "bold" : false,
                 "italic" : false
+            },
+            "comment:" : {
+                "foreground" : [0, 0, 0],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
             }
         },
         "dark" : {
@@ -106,6 +113,13 @@
                 "italic" : false
             },
             "identifier" : {
+                "foreground" : [0, 0, 0],
+                "background" : [0, 0, 0],
+                "enable-background" : false,
+                "bold" : false,
+                "italic" : false
+            },
+            "comment:" : {
                 "foreground" : [0, 0, 0],
                 "background" : [0, 0, 0],
                 "enable-background" : false,
