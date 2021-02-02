@@ -34,3 +34,11 @@ RE-WRITE:
                     ✔ Parse name @done(21-01-31 21:03)
                         ✔ Add <endAlgorithm> token to closing token list @done(21-01-31 21:03)
                     ☐ Parse input and output
+
+        Page:
+            ☐ Sidebar:
+                ☐ Theme select.
+                    ☐ Theme customization
+            ☐ Main:
+                ☐ Textbox.
+                ☐ Formatted code area.

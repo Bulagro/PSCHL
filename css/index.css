@@ -1,0 +1,50 @@
+html {
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+h3 {
+    padding: 10px;
+    text-align: center;
+}
+
+input {
+    display: inline-block;
+    margin: 3px 30px 3px 30px;
+}
+
+#code-input {
+    display: block;
+    margin: auto;
+}
+
+#main-row {
+    height: 100%;
+}
+
+#light-theme, #dark-theme {
+    display: inline-block;
+}
+
+.main {
+    height: 100%;
+    overflow: scroll;
+}
+
+.sidebar {
+    height: 100%;
+    position: fixed;
+    right: 0px;
+    border-left: 3px solid lightgrey;
+    border-radius: 1%;
+    overflow: scroll;
+}
+
+.theme-selector-container {
+    text-align: center;
+}

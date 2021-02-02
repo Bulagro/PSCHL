@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <link href="css/index.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="row" id="main-row">
+            <div class="main col-8">
+                <h3>Pon tu código</h3>
+                <textarea id="code-input" cols=70 rows=15></textarea>
+            </div>
+            <div class="sidebar col-4">
+                <!-- Debe haber una cosa para seleccionar tema: claro y oscuro -->
+                <!-- y una forma de configurar los colores de cada elemento -->
+                <h3>Configuración</h3>
+                <hr>
+                <div class="theme-selector-container">
+                    <form id="light-theme">
+                        <input type="button" id="light-theme-select" value="Light">
+                    </form>
+                    <form id="dark-theme">
+                        <input type="button" id="dark-theme-select" value="Dark">
+                    </form>
+                </div>
+                <hr>
+                <div class="theme-config">
+                    <div class="background-config"></div>
+                    <div class="keyword-config"></div>
+                    <div class="number-config"></div>
+                    <div class="operator-config"></div>
+                    <div class="string-config"></div>
+                    <div class="delimiter-config"></div>
+                    <div class="identifier-config"></div>
+                    <div class="comment-config"></div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </body>
+</html>
