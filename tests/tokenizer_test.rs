@@ -20,8 +20,6 @@ fn get_es_keywords() -> &'static str {
         ],
         "comment" : "coment",
         "name" : "Nombre",
-        "input" : "Entrada",
-        "output" : "Salida",
         "closing_prefix" : "Fin"
     }"#
 }
@@ -713,39 +711,6 @@ fn test_comment_ends_with_new_line() {
         },
     ];
     let actual: Vec<Token> = tokenize(input_str, get_es_keywords(), false);
-
-    assert_eq!(expected, actual);
-}
-
-#[test]
-fn test_name_token() {
-    let expected: Vec<Token> = vec![Token {
-        t: Type::Name,
-        c: String::from("nombre: Algoritmo"),
-    }];
-    let actual: Vec<Token> = tokenize("nombre: Algoritmo", get_es_keywords(), false);
-
-    assert_eq!(expected, actual);
-}
-
-#[test]
-fn test_input_token() {
-    let expected: Vec<Token> = vec![Token {
-        t: Type::Input,
-        c: String::from("entrada: a"),
-    }];
-    let actual: Vec<Token> = tokenize("entrada: a", get_es_keywords(), false);
-
-    assert_eq!(expected, actual);
-}
-
-#[test]
-fn test_output_token() {
-    let expected: Vec<Token> = vec![Token {
-        t: Type::Output,
-        c: String::from("salida: a, b, c"),
-    }];
-    let actual: Vec<Token> = tokenize("salida: a, b, c", get_es_keywords(), false);
 
     assert_eq!(expected, actual);
 }

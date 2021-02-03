@@ -4,13 +4,7 @@ const DELIMITERS: &str = "(){}[].,:;";
 const OPERATORS: &str = "+-*/=!<>";
 const DOUBLE_CHAR_OPERATORS: [&str; 10] =
     ["==", "!=", "<=", ">=", "++", "--", "+=", "-=", "*=", "/="];
-const LINE_TOKENS: [Type; 5] = [
-    Type::Comment,
-    Type::Name,
-    Type::Input,
-    Type::Output,
-    Type::String,
-];
+const LINE_TOKENS: [Type; 3] = [Type::Comment, Type::Name, Type::String];
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Type {
@@ -25,8 +19,6 @@ pub enum Type {
     NewLine,
     Comment,
     Name,
-    Input,
-    Output,
     None,
 }
 
@@ -43,8 +35,6 @@ pub struct Keywords {
     regular: Vec<String>,
     comment: String,
     name: String,
-    input: String,
-    output: String,
     closing_prefix: String,
 }
 
@@ -287,18 +277,6 @@ fn construct_identifier_token(
         }
 
         t_type = Type::Name;
-    } else if lc == keywords.input.to_lowercase() {
-        if capitalize_keywords {
-            content = keywords.input.clone();
-        }
-
-        t_type = Type::Input;
-    } else if lc == keywords.output.to_lowercase() {
-        if capitalize_keywords {
-            content = keywords.output.clone();
-        }
-
-        t_type = Type::Output;
     }
 
     (t_type, content)

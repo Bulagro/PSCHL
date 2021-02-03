@@ -18,8 +18,6 @@
         ],
         "comment" : "coment",
         "name" : "Nombre",
-        "input" : "Entrada",
-        "output" : "Salida",
         "closing_prefix" : "Fin"
     },
     "themes" : {
