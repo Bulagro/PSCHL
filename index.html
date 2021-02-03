@@ -17,22 +17,41 @@
                 <hr>
                 <div class="theme-selector-container">
                     <form id="light-theme">
-                        <input type="button" id="light-theme-select" value="Light">
+                        <input type="button" id="light-theme-select" value="Claro">
                     </form>
                     <form id="dark-theme">
-                        <input type="button" id="dark-theme-select" value="Dark">
+                        <input type="button" id="dark-theme-select" value="Oscuro">
                     </form>
                 </div>
                 <hr>
                 <div class="theme-config">
-                    <div class="background-config"></div>
-                    <div class="keyword-config"></div>
-                    <div class="number-config"></div>
-                    <div class="operator-config"></div>
-                    <div class="string-config"></div>
-                    <div class="delimiter-config"></div>
-                    <div class="identifier-config"></div>
-                    <div class="comment-config"></div>
+                    <div id="background-config">
+                        <h4>Color de Fondo</h4>
+                        <form>
+                            <div class="slider-container">
+                                <label for="background-red">R</label>
+                                <input type="range" min=0 max=255 id="background-red" name="background-red" class="slider-red">
+                            </div>
+                            <div class="slider-container">
+                                <label for="background-green">G</label>
+                                <input type="range" min=0 max=255 id="background-green" name="background-green" class="slider-green">
+                            </div>
+                            <div class="slider-container">
+                                <label for="background-blue">B</label>
+                                <input type="range" min=0 max=255 id="background-blue" name="background-blue" class="slider-blue">
+                            </div>
+                        </form>
+                        <div class="color-display-container">
+                            <div class="color-display" id="background-color-display"></div>
+                        </div>
+                    </div>
+                    <div id="keyword-config"></div>
+                    <div id="number-config"></div>
+                    <div id="operator-config"></div>
+                    <div id="string-config"></div>
+                    <div id="delimiter-config"></div>
+                    <div id="identifier-config"></div>
+                    <div id="comment-config"></div>
                 </div>
                 <hr>
             </div>

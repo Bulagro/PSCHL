@@ -38,7 +38,9 @@ RE-WRITE:
         Page:
             ☐ Sidebar:
                 ☐ Theme select.
-                    ☐ Theme customization
+                    ☐ Theme customization.
+                        ☐ Have every slider change color as it's value changes.
+                        ☐ Make a ball that displays the combined color of the sliders.
             ☐ Main:
                 ☐ Textbox.
                 ☐ Formatted code area.

@@ -48,3 +48,33 @@ input {
 .theme-selector-container {
     text-align: center;
 }
+
+.theme-config h4 {
+    margin: 12px;
+}
+
+.slider-red, .slider-green, .slider-blue {
+    width: 90%;
+    margin: auto;
+}
+
+.slider-container label {
+    width: 7%;
+}
+
+.color-display-container {
+    width: 100%;
+    height: 100%;
+}
+
+.color-display {
+    width: 80%;
+    height: 50px;
+    margin: 10px auto auto auto;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+#background-color-display {
+    background-color: red;
+}
