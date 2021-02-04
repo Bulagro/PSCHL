@@ -65,7 +65,7 @@
                 "bold" : false,
                 "italic" : false
             },
-            "comment:" : {
+            "comment" : {
                 "foreground" : [0, 0, 0],
                 "background" : [0, 0, 0],
                 "enable-background" : false,
@@ -117,7 +117,7 @@
                 "bold" : false,
                 "italic" : false
             },
-            "comment:" : {
+            "comment" : {
                 "foreground" : [0, 0, 0],
                 "background" : [0, 0, 0],
                 "enable-background" : false,
