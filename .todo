@@ -40,8 +40,9 @@ RE-WRITE:
             ☐ Sidebar:
                 ☐ Theme select.
                     ☐ Theme customization.
-                        ☐ Have every slider change color as it's value changes.
-                        ☐ Make a ball that displays the combined color of the sliders.
+                        ✔ Have every slider change color as it's value changes. @done(21-02-04 10:54)
+                        ✔ Make a ball that displays the combined color of the sliders. @done(21-02-04 10:55)
+                        ✔ Load initial color configuration as the page initializes. @done(21-02-04 11:45)
             ☐ Main:
                 ☐ Textbox.
                 ☐ Formatted code area.
