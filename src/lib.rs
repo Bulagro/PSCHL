@@ -233,7 +233,10 @@ pub fn tokenize(input_str: &str, lang_config_str: &str, capitalize_keywords: boo
         });
     }
 
-    combine_tokens(tokens)
+    combine_tokens(&mut tokens);
+    set_closing_name_keyword(&mut tokens, &keywords);
+
+    tokens
 }
 
 fn construct_identifier_token(
@@ -282,12 +285,11 @@ fn construct_identifier_token(
     (t_type, content)
 }
 
-fn combine_tokens(tokens: Vec<Token>) -> Vec<Token> {
+fn combine_tokens(tokens: &mut Vec<Token>) {
     if tokens.is_empty() {
-        return tokens;
+        return;
     }
 
-    let mut tokens = tokens;
     let mut done = false;
 
     while !done {
@@ -326,36 +328,24 @@ fn combine_tokens(tokens: Vec<Token>) -> Vec<Token> {
             }
         }
     }
-
-    tokens
 }
 
-pub fn get_updated_json_with_name(tokens: &[Token], lang_config_str: &str) -> String {
-    let mut keywords: Keywords = serde_json::from_str(lang_config_str).unwrap();
+fn set_closing_name_keyword(tokens: &mut Vec<Token>, keywords: &Keywords) {
+    let mut closing_name_kw = String::new();
 
-    if tokens.is_empty() {
-        return serde_json::to_string(&keywords).unwrap();
+    for i in 0..tokens.len() {
+        if tokens[i].t == Type::Name {
+            let name: String = tokens[i]
+                .c
+                .strip_prefix(&format!("{}:", &keywords.name))
+                .unwrap()
+                .split_whitespace()
+                .collect();
+            closing_name_kw = format!("{}{}", &keywords.closing_prefix, name);
+        } else if tokens[i].t == Type::Identifier && tokens[i].c == closing_name_kw {
+            tokens[i].t = Type::ClosingKw;
+        }
     }
-
-    let name_index = tokens
-        .iter()
-        .take_while(|token| token.t != Type::Name)
-        .count();
-
-    let name: String = tokens[name_index]
-        .c
-        .strip_prefix(&format!("{}:", &keywords.name))
-        .unwrap()
-        .split_whitespace()
-        .collect();
-
-    if !name.is_empty() {
-        keywords
-            .closing
-            .push(format!("{}{}", keywords.closing_prefix, name));
-    }
-
-    serde_json::to_string(&keywords).unwrap()
 }
 
 pub fn indent(tokens: &[Token]) -> Vec<Line> {

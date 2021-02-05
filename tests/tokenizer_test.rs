@@ -746,3 +746,26 @@ fn test_corrected_keyword() {
 
     assert_eq!(actual, expected);
 }
+
+#[test]
+fn test_closing_name_keyword() {
+    let input_str = "Nombre: hola\nFinhola";
+
+    let expected = vec![
+        Token {
+            t: Type::Name,
+            c: String::from("Nombre: hola"),
+        },
+        Token {
+            t: Type::NewLine,
+            c: String::new(),
+        },
+        Token {
+            t: Type::ClosingKw,
+            c: String::from("Finhola"),
+        },
+    ];
+    let actual = tokenize(input_str, get_es_keywords(), true);
+
+    assert_eq!(actual, expected);
+}
