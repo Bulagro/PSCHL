@@ -96,19 +96,17 @@ readTextFile("https://bulagro.github.io/PSCHL/config/es.json", (config) => {
         });
         sliderGreen.addEventListener('input', (_) => {
             let slider_color = `rgb(0, ${sliderGreen.value}, 0)`;
-            let bar_color = `rgb(${sliderRed.value}, ${sliderGreen.value}, ${sliderBlue.value})`;
-
             sliderGreen.style.backgroundColor = slider_color;
-            colorBar.style.backgroundColor = bar_color;
+            setColorBar(colorBar, sliderRed.value, sliderGreen.value, sliderBlue.value);
             updateColors();
         });
         sliderBlue.addEventListener('input', (_) => {
             let slider_color = `rgb(0, 0, ${sliderBlue.value})`;
-            let bar_color = `rgb(${sliderRed.value}, ${sliderGreen.value}, ${sliderBlue.value})`;
-
             sliderBlue.style.backgroundColor = slider_color;
-            colorBar.style.backgroundColor = bar_color;
+            setColorBar(colorBar, sliderRed.value, sliderGreen.value, sliderBlue.value);
             updateColors();
         });
+
+        updateColors();
     });
 });
