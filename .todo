@@ -46,3 +46,10 @@ RE-WRITE:
             ☐ Main:
                 ☐ Textbox.
                 ☐ Formatted code area.
+                    ☐ Generate html.
+                    ☐ Button to export generated html to an image.
+                ☐ Double click line to lighlight like comment.
+
+    I'm a little conflicted with adding code data into pseudocode.
+    Ideally, the only thing this deals with is pseudocode. However, there are a few important data elements that aren't parsed: variable declaraton, input and output.
+    For now, the solution is to add them via GUI.
