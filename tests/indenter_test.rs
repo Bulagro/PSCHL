@@ -3,24 +3,24 @@ use pschl::*;
 fn get_es_keywords() -> &'static str {
     r#"{
         "opening" : [
-            "si",
-            "mientras",
-            "para"
+            "Si",
+            "Mientras",
+            "Para"
         ],
         "closing" : [
-            "finsi",
-            "finmientras",
-            "finpara"
+            "FinSi",
+            "FinMientras",
+            "FinPara"
         ],
         "regular" : [
-            "entonces",
-            "hasta"
+            "Entonces",
+            "Hasta",
+            "con",
+            "paso"
         ],
         "comment" : "coment",
-        "name" : "nombre",
-        "input" : "entrada",
-        "output" : "salida",
-        "closing_prefix" : "fin"
+        "name" : "Nombre",
+        "closing_prefix" : "Fin"
     }"#
 }
 
