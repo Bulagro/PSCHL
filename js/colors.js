@@ -1,5 +1,6 @@
 let colorConfig = null;
 let theme = 'light';
+const elements = ['background', 'keyword', 'number', 'operator', 'string', 'delimiter', 'identifier', 'comment'];
 
 function readTextFile(file, callback) {
     var rawFile = new XMLHttpRequest();
@@ -54,13 +55,43 @@ function updateColors() {
     });
 }
 
+function changeTheme(t) {
+    theme = t;
+
+    elements.forEach((e) => {
+        let colorBar = document.getElementById(`${e}-color-display`);
+
+        let sliderRed = document.getElementById(`${e}-red`);
+        let sliderGreen = document.getElementById(`${e}-green`);
+        let sliderBlue = document.getElementById(`${e}-blue`);
+
+        if (e == 'background') {
+            let r = colorConfig['themes'][theme]['background'][0],
+                g = colorConfig['themes'][theme]['background'][1],
+                b = colorConfig['themes'][theme]['background'][2];
+
+            setSlider(sliderRed, r);
+            setSlider(sliderGreen, g);
+            setSlider(sliderBlue, b);
+            setColorBar(colorBar, r, g, b);
+        } else {
+            let r = colorConfig['themes'][theme][e]['foreground'][0],
+                g = colorConfig['themes'][theme][e]['foreground'][1],
+                b = colorConfig['themes'][theme][e]['foreground'][2];
+
+            setSlider(sliderRed, r);
+            setSlider(sliderGreen, g);
+            setSlider(sliderBlue, b);
+            setColorBar(colorBar, r, g, b)
+        }
+    });
+}
 
 readTextFile("https://bulagro.github.io/PSCHL/config/es.json", (config) => {
     if (colorConfig === null) {
         colorConfig = config;
     }
 
-    const elements = ['background', 'keyword', 'number', 'operator', 'string', 'delimiter', 'identifier', 'comment'];
     elements.forEach((e) => {
         let colorBar = document.getElementById(`${e}-color-display`);
 
